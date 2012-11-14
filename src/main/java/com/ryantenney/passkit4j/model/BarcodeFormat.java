@@ -15,7 +15,7 @@ public enum BarcodeFormat {
 	private static final Map<String, BarcodeFormat> lookup;
 
 	static {
-		final Map<String, BarcodeFormat> _lookup = new HashMap<>();
+		final Map<String, BarcodeFormat> _lookup = new HashMap<String, BarcodeFormat>();
 		for (BarcodeFormat entry : BarcodeFormat.values()) {
 			_lookup.put(entry.value(), entry);
 		}

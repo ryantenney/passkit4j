@@ -122,7 +122,7 @@ public class PassSerializer {
 	}
 
 	protected static Map<String, String> writeAndHashFiles(List<PassResource> files, ZipOutputStream output) throws IOException, NoSuchAlgorithmException, DigestException, NoSuchProviderException {
-		Map<String, String> hashes = new HashMap<>();
+		Map<String, String> hashes = new HashMap<String, String>();
 		for (PassResource file : files) {
 			OutputStreamHasher hasher = hasher(zipEntry(file.name(), output));
 			copy(file.data(), hasher);

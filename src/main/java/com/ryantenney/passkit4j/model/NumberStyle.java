@@ -16,7 +16,7 @@ public enum NumberStyle {
 	private static final Map<String, NumberStyle> lookup;
 
 	static {
-		final Map<String, NumberStyle> _lookup = new HashMap<>();
+		final Map<String, NumberStyle> _lookup = new HashMap<String, NumberStyle>();
 		for (NumberStyle entry : NumberStyle.values()) {
 			_lookup.put(entry.value(), entry);
 		}

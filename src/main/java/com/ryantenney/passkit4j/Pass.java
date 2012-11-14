@@ -48,7 +48,7 @@ public class Pass {
 	@JsonProperty private List<String> associatedStoreIdentifiers;
 
 	@JsonIgnore private PassInformation passInformation;
-	@JsonIgnore private List<PassResource> files = new ArrayList<>();
+	@JsonIgnore private List<PassResource> files;
 
 	public List<PassResource> files() {
 		return this.files;

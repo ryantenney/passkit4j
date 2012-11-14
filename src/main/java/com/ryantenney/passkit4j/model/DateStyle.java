@@ -17,7 +17,7 @@ public enum DateStyle {
 	private static final Map<String, DateStyle> lookup;
 
 	static {
-		final Map<String, DateStyle> _lookup = new HashMap<>();
+		final Map<String, DateStyle> _lookup = new HashMap<String, DateStyle>();
 		for (DateStyle entry : DateStyle.values()) {
 			_lookup.put(entry.value(), entry);
 		}

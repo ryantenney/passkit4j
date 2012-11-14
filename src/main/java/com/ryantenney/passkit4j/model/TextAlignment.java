@@ -17,7 +17,7 @@ public enum TextAlignment {
 	private static final Map<String, TextAlignment> lookup;
 
 	static {
-		final Map<String, TextAlignment> _lookup = new HashMap<>();
+		final Map<String, TextAlignment> _lookup = new HashMap<String, TextAlignment>();
 		for (TextAlignment entry : TextAlignment.values()) {
 			_lookup.put(entry.value(), entry);
 		}
