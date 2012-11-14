@@ -1,4 +1,4 @@
-package com.ryantenney.pass4j.model;
+package com.ryantenney.passkit4j.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;

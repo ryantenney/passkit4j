@@ -1,4 +1,4 @@
-package com.ryantenney.pass4j.model;
+package com.ryantenney.passkit4j.model;
 
 import java.io.IOException;
 import java.util.StringTokenizer;

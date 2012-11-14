@@ -2,8 +2,8 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.ryantenney.pass4j</groupId>
-	<artifactId>pass4j</artifactId>
+	<groupId>com.ryantenney.passkit4j</groupId>
+	<artifactId>passkit4j</artifactId>
 	<packaging>jar</packaging>
 	<version>1.0-SNAPSHOT</version>
 	<name>Passbook Library for Java</name>

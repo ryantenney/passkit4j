@@ -1,4 +1,4 @@
-package com.ryantenney.pass4j;
+package com.ryantenney.passkit4j;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,10 +13,10 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.ryantenney.pass4j.model.Barcode;
-import com.ryantenney.pass4j.model.Color;
-import com.ryantenney.pass4j.model.Location;
-import com.ryantenney.pass4j.model.PassInformation;
+import com.ryantenney.passkit4j.model.Barcode;
+import com.ryantenney.passkit4j.model.Color;
+import com.ryantenney.passkit4j.model.Location;
+import com.ryantenney.passkit4j.model.PassInformation;
 
 @Data
 @NoArgsConstructor

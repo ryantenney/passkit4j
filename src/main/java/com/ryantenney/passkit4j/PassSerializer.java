@@ -1,4 +1,4 @@
-package com.ryantenney.pass4j;
+package com.ryantenney.passkit4j;
 
 import java.io.ByteArrayOutputStream;
 import java.io.Closeable;
@@ -47,7 +47,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
-import com.ryantenney.pass4j.model.PassInformation;
+import com.ryantenney.passkit4j.model.PassInformation;
 
 public class PassSerializer {
 

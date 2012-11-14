@@ -1,6 +1,6 @@
-# pass4j [![Build Status](https://secure.travis-ci.org/ryantenney/pass4j.png?branch=master)](https://travis-ci.org/ryantenney/pass4j)
+# passkit4j [![Build Status](https://secure.travis-ci.org/ryantenney/passkit4j.png?branch=master)](https://travis-ci.org/ryantenney/passkit4j)
 
-#### Apple Passbook file generator
+#### Apple Passbook generator library for Java
 
 
 

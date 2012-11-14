@@ -1,4 +1,4 @@
-package com.ryantenney.pass4j;
+package com.ryantenney.passkit4j;
 
 import java.io.File;
 import java.io.FileInputStream;

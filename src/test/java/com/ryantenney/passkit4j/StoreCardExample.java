@@ -1,9 +1,13 @@
-package com.ryantenney.pass4j;
+package com.ryantenney.passkit4j;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 
-import com.ryantenney.pass4j.model.*;
+import com.ryantenney.passkit4j.Pass;
+import com.ryantenney.passkit4j.PassResource;
+import com.ryantenney.passkit4j.PassSerializer;
+import com.ryantenney.passkit4j.PassSigningInformation;
+import com.ryantenney.passkit4j.model.*;
 
 public class StoreCardExample {
 
