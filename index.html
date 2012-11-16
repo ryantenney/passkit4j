@@ -20,7 +20,7 @@
     <header>
       <div class="inner">
         <h1>passkit4j</h1>
-        <h2>Apple Passbook generator library for Java</h2>
+        <h2>Apple Passbook library for Java</h2>
         <a href="https://github.com/ryantenney/passkit4j" class="button"><small>View project on</small>GitHub</a>
       </div>
     </header>
@@ -31,7 +31,22 @@
           <h1>passkit4j <a href="https://travis-ci.org/ryantenney/passkit4j"><img src="https://secure.travis-ci.org/ryantenney/passkit4j.png?branch=master" alt="Build Status"></a>
 </h1>
 
-<h4>Apple Passbook generator library for Java</h4>
+<h4>Apple Passbook library for Java</h4>
+
+<ul>
+<li>Fluent API</li>
+<li>Stream-oriented</li>
+</ul><h4>Usage</h4>
+
+<p>Create a Pass Type ID in the iOS Provisioning Portal (if you haven't done so already), import the resulting <code>pass.cer</code> file into Keychain, then export it as a <code>.p12</code> file. Download the <a href="http://developer.apple.com/certificationauthority/AppleWWDRCA.cer">Apple WWDR certificate</a> and export it as a <code>.pem</code> file.</p>
+
+<p>In the code, create a <code>PassSigningInformation</code> object with these certificates:</p>
+
+<pre><code>PassSigningInformation signing = PassSigningInformation.builder()
+    .keystore(new FileInputStream("certificate.p12"), "password")
+    .intermediateCertificate(new FileInputStream("wwdr.pem"))
+    .build();
+</code></pre>
 
 <hr><h4>License</h4>
 
