@@ -10,11 +10,7 @@ import java.security.DigestOutputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
-import java.security.PrivateKey;
-import java.security.Security;
 import java.security.cert.CertificateEncodingException;
-import java.security.cert.X509Certificate;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,19 +21,9 @@ import lombok.Delegate;
 import lombok.Getter;
 import lombok.experimental.Accessors;
 
-import org.bouncycastle.cert.jcajce.JcaCertStore;
 import org.bouncycastle.cms.CMSException;
-import org.bouncycastle.cms.CMSProcessableByteArray;
-import org.bouncycastle.cms.CMSSignedData;
-import org.bouncycastle.cms.CMSSignedDataGenerator;
-import org.bouncycastle.cms.SignerInfoGenerator;
-import org.bouncycastle.cms.jcajce.JcaSignerInfoGeneratorBuilder;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
-import org.bouncycastle.operator.ContentSigner;
-import org.bouncycastle.operator.DigestCalculatorProvider;
 import org.bouncycastle.operator.OperatorCreationException;
-import org.bouncycastle.operator.jcajce.JcaContentSignerBuilder;
-import org.bouncycastle.operator.jcajce.JcaDigestCalculatorProviderBuilder;
 import org.bouncycastle.util.encoders.Hex;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
@@ -48,6 +34,8 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 import com.ryantenney.passkit4j.model.PassInformation;
+import com.ryantenney.passkit4j.signing.PassSigner;
+import com.ryantenney.passkit4j.signing.PassSigningException;
 
 public class PassSerializer {
 
@@ -60,7 +48,7 @@ public class PassSerializer {
 		objectMapper.setVisibilityChecker(objectMapper.getVisibilityChecker().withFieldVisibility(Visibility.ANY));
 	}
 
-	public static void writePkPassArchive(Pass pass, PassSigningInformation signingInformation, OutputStream out) throws IOException, NoSuchAlgorithmException, DigestException, CertificateEncodingException, OperatorCreationException, CMSException, NoSuchProviderException {
+	public static void writePkPassArchive(Pass pass, PassSigner signer, OutputStream out) throws IOException, NoSuchAlgorithmException, DigestException, CertificateEncodingException, OperatorCreationException, CMSException, NoSuchProviderException, PassSigningException {
 		ZipOutputStream zip = new ZipOutputStream(out);
 
 		Map<String, String> manifest = writeAndHashFiles(pass.files(), zip);
@@ -69,7 +57,7 @@ public class PassSerializer {
 		byte[] manifestData = write(generateManifest(manifest), new ByteArrayOutputStream()).toByteArray();
 		write(manifestData, zipEntry("manifest.json", zip));
 
-		byte[] signatureData = generateSignature(manifestData, signingInformation);
+		byte[] signatureData = signer.generateSignature(manifestData);
 		write(signatureData, zipEntry("signature", zip));
 
 		zip.close();
@@ -90,35 +78,6 @@ public class PassSerializer {
 			node.put(file.getKey(), file.getValue());
 		}
 		return node;
-	}
-
-	protected static byte[] generateSignature(byte[] data, PassSigningInformation signingInformation) throws OperatorCreationException, CertificateEncodingException, CMSException, IOException {
-		if (Security.getProvider(BouncyCastleProvider.PROVIDER_NAME) == null) {
-			Security.addProvider(new BouncyCastleProvider());
-		}
-
-		X509Certificate certificate = signingInformation.signingCertificate();
-		PrivateKey privateKey = signingInformation.privateKey();
-		X509Certificate wwdrCertificate = signingInformation.intermediateCertificate();
-
-		ContentSigner sha1Signer = new JcaContentSignerBuilder("SHA1withRSA")
-				.setProvider(BouncyCastleProvider.PROVIDER_NAME)
-				.build(privateKey);
-
-		DigestCalculatorProvider digestCalculatorProvider = new JcaDigestCalculatorProviderBuilder()
-				.setProvider(BouncyCastleProvider.PROVIDER_NAME)
-				.build();
-
-		SignerInfoGenerator signerInfoGenerator = new JcaSignerInfoGeneratorBuilder(digestCalculatorProvider)
-				.build(sha1Signer, certificate);
-
-		CMSSignedDataGenerator generator = new CMSSignedDataGenerator();
-		generator.addSignerInfoGenerator(signerInfoGenerator);
-		generator.addCertificates(new JcaCertStore(Arrays.asList(wwdrCertificate, certificate)));
-
-		CMSProcessableByteArray processableData = new CMSProcessableByteArray(data);
-		CMSSignedData signedData = generator.generate(processableData);
-		return signedData.getEncoded();
 	}
 
 	protected static Map<String, String> writeAndHashFiles(List<PassResource> files, ZipOutputStream output) throws IOException, NoSuchAlgorithmException, DigestException, NoSuchProviderException {

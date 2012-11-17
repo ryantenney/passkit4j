@@ -1,4 +1,4 @@
-package com.ryantenney.passkit4j;
+package com.ryantenney.passkit4j.signing;
 
 import java.io.IOException;
 import java.io.InputStream;
