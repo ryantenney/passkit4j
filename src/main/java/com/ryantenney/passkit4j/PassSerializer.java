@@ -10,7 +10,6 @@ import java.security.DigestOutputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
-import java.security.cert.CertificateEncodingException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,9 +20,7 @@ import lombok.Delegate;
 import lombok.Getter;
 import lombok.experimental.Accessors;
 
-import org.bouncycastle.cms.CMSException;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
-import org.bouncycastle.operator.OperatorCreationException;
 import org.bouncycastle.util.encoders.Hex;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
@@ -48,19 +45,31 @@ public class PassSerializer {
 		objectMapper.setVisibilityChecker(objectMapper.getVisibilityChecker().withFieldVisibility(Visibility.ANY));
 	}
 
-	public static void writePkPassArchive(Pass pass, PassSigner signer, OutputStream out) throws IOException, NoSuchAlgorithmException, DigestException, CertificateEncodingException, OperatorCreationException, CMSException, NoSuchProviderException, PassSigningException {
+	public static void writePkPassArchive(Pass pass, PassSigner signer, OutputStream out) throws PassSigningException, PassSerializationException {
 		ZipOutputStream zip = new ZipOutputStream(out);
 
-		Map<String, String> manifest = writeAndHashFiles(pass.files(), zip);
-		manifest.put("pass.json", write(generatePass(pass), hasher(zipEntry("pass.json", zip))).hash());
+		try {
 
-		byte[] manifestData = write(generateManifest(manifest), new ByteArrayOutputStream()).toByteArray();
-		write(manifestData, zipEntry("manifest.json", zip));
+			Map<String, String> manifest = writeAndHashFiles(pass.files(), zip);
+			manifest.put("pass.json", write(generatePass(pass), hasher(zipEntry("pass.json", zip))).hash());
 
-		byte[] signatureData = signer.generateSignature(manifestData);
-		write(signatureData, zipEntry("signature", zip));
+			byte[] manifestData = write(generateManifest(manifest), new ByteArrayOutputStream()).toByteArray();
+			write(manifestData, zipEntry("manifest.json", zip));
 
-		zip.close();
+			byte[] signatureData = signer.generateSignature(manifestData);
+			write(signatureData, zipEntry("signature", zip));
+
+			zip.close();
+
+		} catch (NoSuchAlgorithmException e) {
+			throw new PassSerializationException(e);
+		} catch (DigestException e) {
+			throw new PassSerializationException(e);
+		} catch (NoSuchProviderException e) {
+			throw new PassSerializationException(e);
+		} catch (IOException e) {
+			throw new PassSerializationException(e);
+		}
 	}
 
 	protected static ObjectNode generatePass(Pass pass) {
