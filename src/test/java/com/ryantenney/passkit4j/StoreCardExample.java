@@ -7,8 +7,8 @@ import com.ryantenney.passkit4j.Pass;
 import com.ryantenney.passkit4j.PassResource;
 import com.ryantenney.passkit4j.PassSerializer;
 import com.ryantenney.passkit4j.model.*;
-import com.ryantenney.passkit4j.signing.PassSignerImpl;
-import com.ryantenney.passkit4j.signing.PassSigner;
+import com.ryantenney.passkit4j.sign.PassSigner;
+import com.ryantenney.passkit4j.sign.PassSignerImpl;
 
 public class StoreCardExample {
 
