@@ -7,9 +7,8 @@ import com.ryantenney.passkit4j.Pass;
 import com.ryantenney.passkit4j.PassResource;
 import com.ryantenney.passkit4j.PassSerializer;
 import com.ryantenney.passkit4j.model.*;
-import com.ryantenney.passkit4j.signing.CertificatePassSigner;
+import com.ryantenney.passkit4j.signing.PassSignerImpl;
 import com.ryantenney.passkit4j.signing.PassSigner;
-import com.ryantenney.passkit4j.signing.PassSigningInformation;
 
 public class StoreCardExample {
 
@@ -50,12 +49,10 @@ public class StoreCardExample {
 					)
 			);
 
-		PassSigningInformation signing = PassSigningInformation.builder()
+		PassSigner signer = PassSignerImpl.builder()
 			.keystore(new FileInputStream("certificates/Certificates.p12"), null)
 			.intermediateCertificate(new FileInputStream("certificates/wwdr.pem"))
 			.build();
-
-		PassSigner signer = new CertificatePassSigner(signing);
 
 		PassSerializer.writePkPassArchive(pass, signer, new FileOutputStream("StoreCard.pkpass"));
 	}

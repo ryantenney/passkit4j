@@ -8,9 +8,12 @@ import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 import java.security.PrivateKey;
+import java.security.Security;
 import java.security.UnrecoverableKeyException;
+import java.security.cert.CertificateEncodingException;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
+import java.util.Arrays;
 import java.util.Collections;
 
 import lombok.Data;
@@ -19,10 +22,24 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.Accessors;
 
+import org.bouncycastle.cert.jcajce.JcaCertStore;
+import org.bouncycastle.cms.CMSException;
+import org.bouncycastle.cms.CMSProcessableByteArray;
+import org.bouncycastle.cms.CMSSignedData;
+import org.bouncycastle.cms.CMSSignedDataGenerator;
+import org.bouncycastle.cms.SignerInfoGenerator;
+import org.bouncycastle.cms.jcajce.JcaSignerInfoGeneratorBuilder;
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
+import org.bouncycastle.operator.ContentSigner;
+import org.bouncycastle.operator.DigestCalculatorProvider;
+import org.bouncycastle.operator.OperatorCreationException;
+import org.bouncycastle.operator.jcajce.JcaContentSignerBuilder;
+import org.bouncycastle.operator.jcajce.JcaDigestCalculatorProviderBuilder;
+
 @Data
 @Accessors(fluent=true)
 @RequiredArgsConstructor
-public class PassSigningInformation {
+public class PassSignerImpl implements PassSigner {
 
 	@NonNull private final X509Certificate signingCertificate;
 	@NonNull private final PrivateKey privateKey;
@@ -76,12 +93,12 @@ public class PassSigningInformation {
 			return this;
 		}
 
-		public PassSigningInformation build() {
+		public PassSigner build() {
 			if (signingCertificate == null || privateKey == null || intermediateCertificate == null) {
 				throw new IllegalArgumentException();
 			}
 
-			return new PassSigningInformation(signingCertificate, privateKey, intermediateCertificate);
+			return new PassSignerImpl(signingCertificate, privateKey, intermediateCertificate);
 		}
 
 		private static final char[] chars(String password) {
@@ -89,6 +106,43 @@ public class PassSigningInformation {
 			return password.toCharArray();
 		}
 
+	}
+
+	public byte[] generateSignature(byte[] data) throws PassSigningException {
+		if (Security.getProvider(BouncyCastleProvider.PROVIDER_NAME) == null) {
+			Security.addProvider(new BouncyCastleProvider());
+		}
+
+		try {
+
+			ContentSigner sha1Signer = new JcaContentSignerBuilder("SHA1withRSA")
+					.setProvider(BouncyCastleProvider.PROVIDER_NAME)
+					.build(privateKey);
+	
+			DigestCalculatorProvider digestCalculatorProvider = new JcaDigestCalculatorProviderBuilder()
+					.setProvider(BouncyCastleProvider.PROVIDER_NAME)
+					.build();
+	
+			SignerInfoGenerator signerInfoGenerator = new JcaSignerInfoGeneratorBuilder(digestCalculatorProvider)
+					.build(sha1Signer, signingCertificate);
+	
+			CMSSignedDataGenerator generator = new CMSSignedDataGenerator();
+			generator.addSignerInfoGenerator(signerInfoGenerator);
+			generator.addCertificates(new JcaCertStore(Arrays.asList(intermediateCertificate, signingCertificate)));
+	
+			CMSProcessableByteArray processableData = new CMSProcessableByteArray(data);
+			CMSSignedData signedData = generator.generate(processableData);
+			return signedData.getEncoded();
+
+		} catch (IOException e) {
+			throw new PassSigningException(e);
+		} catch (OperatorCreationException e) {
+			throw new PassSigningException(e);
+		} catch (CertificateEncodingException e) {
+			throw new PassSigningException(e);
+		} catch (CMSException e) {
+			throw new PassSigningException(e);
+		}
 	}
 
 }
