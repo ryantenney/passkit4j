@@ -28,13 +28,9 @@ import org.bouncycastle.cms.CMSProcessableByteArray;
 import org.bouncycastle.cms.CMSSignedData;
 import org.bouncycastle.cms.CMSSignedDataGenerator;
 import org.bouncycastle.cms.SignerInfoGenerator;
-import org.bouncycastle.cms.jcajce.JcaSignerInfoGeneratorBuilder;
+import org.bouncycastle.cms.jcajce.JcaSimpleSignerInfoGeneratorBuilder;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
-import org.bouncycastle.operator.ContentSigner;
-import org.bouncycastle.operator.DigestCalculatorProvider;
 import org.bouncycastle.operator.OperatorCreationException;
-import org.bouncycastle.operator.jcajce.JcaContentSignerBuilder;
-import org.bouncycastle.operator.jcajce.JcaDigestCalculatorProviderBuilder;
 
 @Data
 @Accessors(fluent=true)
@@ -114,22 +110,15 @@ public class PassSignerImpl implements PassSigner {
 		}
 
 		try {
-
-			ContentSigner sha1Signer = new JcaContentSignerBuilder("SHA1withRSA")
-					.setProvider(BouncyCastleProvider.PROVIDER_NAME)
-					.build(privateKey);
 	
-			DigestCalculatorProvider digestCalculatorProvider = new JcaDigestCalculatorProviderBuilder()
-					.setProvider(BouncyCastleProvider.PROVIDER_NAME)
-					.build();
-	
-			SignerInfoGenerator signerInfoGenerator = new JcaSignerInfoGeneratorBuilder(digestCalculatorProvider)
-					.build(sha1Signer, signingCertificate);
+			SignerInfoGenerator signerInfoGenerator = new JcaSimpleSignerInfoGeneratorBuilder()
+				.setProvider(BouncyCastleProvider.PROVIDER_NAME)
+				.build("SHA1withRSA", privateKey, signingCertificate);
 	
 			CMSSignedDataGenerator generator = new CMSSignedDataGenerator();
 			generator.addSignerInfoGenerator(signerInfoGenerator);
 			generator.addCertificates(new JcaCertStore(Arrays.asList(intermediateCertificate, signingCertificate)));
-	
+
 			CMSProcessableByteArray processableData = new CMSProcessableByteArray(data);
 			CMSSignedData signedData = generator.generate(processableData);
 			return signedData.getEncoded();
