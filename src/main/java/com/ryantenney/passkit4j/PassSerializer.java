@@ -24,6 +24,7 @@ import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.util.encoders.Hex;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -43,6 +44,7 @@ public class PassSerializer {
 		objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
 		objectMapper.setDateFormat(new ISO8601DateFormat());
 		objectMapper.setVisibilityChecker(objectMapper.getVisibilityChecker().withFieldVisibility(Visibility.ANY));
+		objectMapper.setSerializationInclusion(Include.NON_EMPTY);
 	}
 
 	public static void writePkPassArchive(Pass pass, PassSigner signer, OutputStream out) throws PassSigningException, PassSerializationException {
@@ -52,6 +54,7 @@ public class PassSerializer {
 
 			Map<String, String> manifest = writeAndHashFiles(pass.files(), zip);
 			manifest.put("pass.json", write(generatePass(pass), hasher(zipEntry("pass.json", zip))).hash());
+			System.out.println(generatePass(pass));
 
 			byte[] manifestData = write(generateManifest(manifest), new ByteArrayOutputStream()).toByteArray();
 			write(manifestData, zipEntry("manifest.json", zip));

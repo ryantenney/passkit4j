@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.ryantenney.passkit4j.model.Barcode;
@@ -20,31 +21,30 @@ import com.ryantenney.passkit4j.model.PassInformation;
 @Data
 @NoArgsConstructor
 @Accessors(chain=true, fluent=true)
-@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Pass {
 
-	@JsonProperty @NonNull private String teamIdentifier;
-	@JsonProperty @NonNull private String passTypeIdentifier;
-	@JsonProperty @NonNull private String organizationName;
-	@JsonProperty @NonNull private String serialNumber;
-	@JsonProperty @NonNull private String description;
+	@NonNull private String teamIdentifier;
+	@NonNull private String passTypeIdentifier;
+	@NonNull private String organizationName;
+	@NonNull private String serialNumber;
+	@NonNull private String description;
 
-	@JsonProperty private final int formatVersion = 1;
+	@JsonProperty("formatVersion") private final int $formatVersion = 1;
 
-	@JsonProperty private Color backgroundColor;
-	@JsonProperty private Color foregroundColor;
-	@JsonProperty private Color labelColor;
-	@JsonProperty private String logoText;
-	@JsonProperty private Barcode barcode;
-	@JsonProperty private boolean suppressStripShine = false;
+	private Color backgroundColor;
+	private Color foregroundColor;
+	private Color labelColor;
+	private String logoText;
+	private Barcode barcode;
+	@JsonInclude(Include.NON_DEFAULT) private boolean suppressStripShine = false;
 
-	@JsonProperty private String webServiceURL;
-	@JsonProperty private String authenticationToken;
+	private String webServiceURL;
+	private String authenticationToken;
 
-	@JsonProperty private List<Location> locations;
-	@JsonProperty private Date relevantDate;
+	private List<Location> locations;
+	private Date relevantDate;
 
-	@JsonProperty private List<String> associatedStoreIdentifiers;
+	private List<String> associatedStoreIdentifiers;
 
 	@JsonIgnore private PassInformation passInformation;
 	@JsonIgnore private List<PassResource> files;

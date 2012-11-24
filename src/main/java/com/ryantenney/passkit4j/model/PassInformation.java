@@ -6,21 +6,17 @@ import java.util.List;
 import lombok.Data;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Data
-@JsonInclude(Include.NON_EMPTY)
 public abstract class PassInformation {
 
 	@JsonIgnore private final String typeName;
 
-	@JsonProperty private List<Field<?>> headerFields;
-	@JsonProperty private List<Field<?>> primaryFields;
-	@JsonProperty private List<Field<?>> secondaryFields;
-	@JsonProperty private List<Field<?>> backFields;
-	@JsonProperty private List<Field<?>> auxiliaryFields;
+	private List<Field<?>> headerFields;
+	private List<Field<?>> primaryFields;
+	private List<Field<?>> secondaryFields;
+	private List<Field<?>> backFields;
+	private List<Field<?>> auxiliaryFields;
 
 	protected PassInformation(final String typeName) {
 		this.typeName = typeName;

@@ -5,17 +5,15 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 
-import lombok.Getter;
+import lombok.Data;
 import lombok.experimental.Accessors;
 
+@Data
 @Accessors(fluent=true)
 public class PassResource {
 
-	private @Getter final String name;
-	private @Getter final InputStream data;
-
-	private @Getter String hash = null;
-	private @Getter boolean consumed = false;
+	private final String name;
+	private final InputStream data;
 
 	public PassResource(final String filename) throws FileNotFoundException {
 		this(new File(filename));

@@ -13,10 +13,11 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
-import lombok.Getter;
+import lombok.Data;
 import lombok.ToString;
 import lombok.experimental.Accessors;
 
+@Data
 @Accessors(fluent=true)
 @ToString(includeFieldNames=true)
 @JsonSerialize(using=Color.ColorSerializer.class)
@@ -26,9 +27,9 @@ public class Color {
 	public static final Color WHITE = new Color(255, 255, 255);
 	public static final Color BLACK = new Color(0, 0, 0);
 
-	private @Getter final int red;
-	private @Getter final int green;
-	private @Getter final int blue;
+	private final int red;
+	private final int green;
+	private final int blue;
 
 	public Color(int red, int green, int blue) {
 		this.red = red;
@@ -55,7 +56,6 @@ public class Color {
 
 		@Override
 		public Color deserialize(JsonParser json, DeserializationContext context) throws IOException, JsonProcessingException {
-			//String str = json.getValueAsString().replace("rgb(", "").replace(")", "");
 			String str = json.getText().replace("rgb(", "").replace(")", "");
 			StringTokenizer tok = new StringTokenizer(str, ",");
 			int red = Integer.parseInt(tok.nextToken().trim(), 10);
