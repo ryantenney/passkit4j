@@ -59,8 +59,6 @@ public class PassSerializer {
 			byte[] signatureData = signer.generateSignature(manifestData);
 			write(signatureData, zipEntry("signature", zip));
 
-			zip.close();
-
 		} catch (NoSuchAlgorithmException e) {
 			throw new PassSerializationException(e);
 		} catch (DigestException e) {
@@ -69,6 +67,12 @@ public class PassSerializer {
 			throw new PassSerializationException(e);
 		} catch (IOException e) {
 			throw new PassSerializationException(e);
+		} finally {
+			try {
+				if (zip != null) zip.close();
+			} catch (IOException e) {
+				throw new PassSerializationException("Error closing output stream", e);
+			}
 		}
 	}
 
