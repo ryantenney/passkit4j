@@ -31,28 +31,59 @@
           <h1>passkit4j <a href="https://travis-ci.org/ryantenney/passkit4j"><img src="https://secure.travis-ci.org/ryantenney/passkit4j.png?branch=master" alt="Build Status"></a>
 </h1>
 
-<h4>Apple Passbook library for Java</h4>
+<h2>Apple Passbook library for Java</h2>
 
 <ul>
 <li>Fluent API</li>
 <li>Stream-oriented</li>
-</ul><h4>Usage</h4>
+</ul><h3>Status</h3>
 
-<p>Create a Pass Type ID in the iOS Provisioning Portal (if you haven't done so already), import the resulting <code>pass.cer</code> file into Keychain, then export it as a <code>.p12</code> file. Download the <a href="http://developer.apple.com/certificationauthority/AppleWWDRCA.cer">Apple WWDR certificate</a> and export it as a <code>.pem</code> file.</p>
+<p>Currently at 1.0.0-SNAPSHOT and has not seen a stable release. v1.0.0 should drop the first week of December 2012.</p>
 
-<p>In the code, create a <code>PassSigningInformation</code> object with these certificates:</p>
+<h3>Usage</h3>
 
-<pre><code>PassSigningInformation signing = PassSigningInformation.builder()
-    .keystore(new FileInputStream("certificate.p12"), "password")
-    .intermediateCertificate(new FileInputStream("wwdr.pem"))
-    .build();
-</code></pre>
+<p>Create a Pass Type ID in the <a href="https://developer.apple.com/ios/manage/passtypeids/index.action">iOS Provisioning Portal</a> (if you haven't done so already), import the resulting <code>pass.cer</code> file into Keychain, then export it as a <code>.p12</code> file. Download the <a href="http://developer.apple.com/certificationauthority/AppleWWDRCA.cer">Apple WWDR certificate</a>.</p>
 
-<hr><h4>License</h4>
+<p>In the code, create a <code>PassSignerImpl</code> object with these certificates:</p>
+
+<div class="highlight"><pre><span class="n">PassSigner</span> <span class="n">signer</span> <span class="o">=</span> <span class="n">PassSignerImpl</span><span class="o">.</span><span class="na">builder</span><span class="o">()</span>
+    <span class="o">.</span><span class="na">keystore</span><span class="o">(</span><span class="k">new</span> <span class="n">FileInputStream</span><span class="o">(</span><span class="s">"/path/to/certificate.p12"</span><span class="o">),</span> <span class="s">"password"</span><span class="o">)</span>
+    <span class="o">.</span><span class="na">intermediateCertificate</span><span class="o">(</span><span class="k">new</span> <span class="n">FileInputStream</span><span class="o">(</span><span class="s">"/path/to/AppleWWDRCA.cer"</span><span class="o">))</span>
+    <span class="o">.</span><span class="na">build</span><span class="o">();</span>
+
+<span class="n">Pass</span> <span class="n">pass</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Pass</span><span class="o">()</span>
+    <span class="o">.</span><span class="na">passTypeIdentifier</span><span class="o">(</span><span class="s">"pass.com.bouldercoffeeco.storeCard"</span><span class="o">)</span>
+    <span class="o">.</span><span class="na">serialNumber</span><span class="o">(</span><span class="s">"1a2b3c"</span><span class="o">)</span>
+    <span class="o">.</span><span class="na">teamIdentifier</span><span class="o">(</span><span class="s">"cafed00d"</span><span class="o">);</span>
+    <span class="c1">// ... for a full example see src/test/com/ryantenney/passkit4j/StoreCardExample.java</span>
+
+<span class="n">PassSerializer</span><span class="o">.</span><span class="na">writePkPassArchive</span><span class="o">(</span><span class="n">pass</span><span class="o">,</span> <span class="n">signer</span><span class="o">,</span> <span class="n">outputStream</span><span class="o">);</span>
+</pre></div>
+
+<h3>Maven</h3>
+
+<p>Stable releases will be availble from Maven Central, until then snapshots are available from the Sonatype OSS repository.</p>
+
+<div class="highlight"><pre><span class="nt">&lt;repository&gt;</span>
+    <span class="nt">&lt;id&gt;</span>sonatype-oss-public<span class="nt">&lt;/id&gt;</span>
+    <span class="nt">&lt;url&gt;</span>https://oss.sonatype.org/content/groups/public/<span class="nt">&lt;/url&gt;</span>
+    <span class="nt">&lt;snapshots&gt;</span>
+        <span class="nt">&lt;enabled&gt;</span>true<span class="nt">&lt;/enabled&gt;</span>
+    <span class="nt">&lt;/snapshots&gt;</span>
+<span class="nt">&lt;/repository&gt;</span>
+
+<span class="nt">&lt;dependency&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>com.ryantenney.passkit4j<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>passkit4j<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;version&gt;</span>1.0.0-SNAPSHOT<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+</pre></div>
+
+<hr><h3>License</h3>
 
 <p>Copyright (c) 2012 Ryan Tenney</p>
 
-<p>Published under Apache Software License 2.0, see LICENSE</p>
+<p><a href="http://rochestermade.com"><img src="http://rochestermade.com/media/images/rochester-made-dark-on-light.png" alt="Rochester Made"></a></p>
         </section>
 
         <aside id="sidebar">
