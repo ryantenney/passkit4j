@@ -54,7 +54,6 @@ public class PassSerializer {
 
 			Map<String, String> manifest = writeAndHashFiles(pass.files(), zip);
 			manifest.put("pass.json", write(generatePass(pass), hasher(zipEntry("pass.json", zip))).hash());
-			System.out.println(generatePass(pass));
 
 			byte[] manifestData = write(generateManifest(manifest), new ByteArrayOutputStream()).toByteArray();
 			write(manifestData, zipEntry("manifest.json", zip));
@@ -107,7 +106,11 @@ public class PassSerializer {
 	}
 
 	private static <T extends OutputStream> T write(JsonNode node, T output) throws IOException {
-		objectMapper.getFactory().createGenerator(output).writeTree(node);
+		objectMapper
+			.getFactory()
+			.createGenerator(output)
+			.useDefaultPrettyPrinter()
+			.writeTree(node);
 		output.close();
 		return output;
 	}
