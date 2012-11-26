@@ -14,15 +14,16 @@ public class StoreCardExample {
 
 	public static void main(String[] args) throws Throwable {
 		Pass pass = new Pass()
-			.passTypeIdentifier("pass.com.bayroast.storeCard")
-			.serialNumber("p69f2J")
 			.teamIdentifier("asdfasdfasdf")
+			.passTypeIdentifier("pass.com.bouldercoffeeco.storeCard")
+			.organizationName("Boulder Coffee Co.")
+			.description("Boulder Coffee Rewards Card Example")
+			.serialNumber("p69f2J")
 			.webServiceURL("https://example.com/passes/")
 			.authenticationToken("vxwxd7J8AlNNFPS8k0a0FfUFtq0ewzFdc")
 			.locations(new Location(37.6189722, -122.3748889))
 			.barcode(new Barcode(BarcodeFormat.PDF417, "12345678"))
-			.organizationName("Bayroast Coffee")
-			.logoText("Bayroast Coffee")
+			.logoText("Boulder Coffee Co.")
 			.foregroundColor(Color.WHITE)
 			.backgroundColor(new Color(118, 74, 50))
 			.files(
@@ -51,7 +52,7 @@ public class StoreCardExample {
 
 		PassSigner signer = PassSignerImpl.builder()
 			.keystore(new FileInputStream("certificates/Certificates.p12"), null)
-			.intermediateCertificate(new FileInputStream("certificates/wwdr.pem"))
+			.intermediateCertificate(new FileInputStream("certificates/AppleWWDRCA.cer"))
 			.build();
 
 		PassSerializer.writePkPassArchive(pass, signer, new FileOutputStream("StoreCard.pkpass"));
