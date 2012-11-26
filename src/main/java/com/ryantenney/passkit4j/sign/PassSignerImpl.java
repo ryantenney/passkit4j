@@ -2,7 +2,6 @@ package com.ryantenney.passkit4j.sign;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.security.Key;
 import java.security.KeyStore;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
@@ -14,7 +13,6 @@ import java.security.cert.CertificateEncodingException;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.util.Arrays;
-import java.util.Collections;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -31,6 +29,8 @@ import org.bouncycastle.cms.SignerInfoGenerator;
 import org.bouncycastle.cms.jcajce.JcaSimpleSignerInfoGeneratorBuilder;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.operator.OperatorCreationException;
+
+import static com.ryantenney.passkit4j.sign.PassSigningUtil.*;
 
 @Data
 @Accessors(fluent=true)
@@ -55,22 +55,13 @@ public class PassSignerImpl implements PassSigner {
 		private X509Certificate intermediateCertificate;
 
 		public Builder keystore(InputStream inputStream, String password) throws NoSuchAlgorithmException, CertificateException, KeyStoreException, NoSuchProviderException, IOException, UnrecoverableKeyException {
-			KeyStore keyStore = PassSigningUtil.loadPKCS12File(inputStream, chars(password));
+			KeyStore keyStore = loadPKCS12File(inputStream, password);
 			return this.keystore(keyStore, password);
 		}
 
 		public Builder keystore(KeyStore keyStore, String password) throws UnrecoverableKeyException, KeyStoreException, NoSuchAlgorithmException {
-			for (String alias : Collections.list(keyStore.aliases())) {
-				Key key = keyStore.getKey(alias, chars(password));
-				if (key instanceof PrivateKey) {
-					this.privateKey = (PrivateKey) key;
-					Object cert = keyStore.getCertificate(alias);
-					if (cert instanceof X509Certificate) {
-						this.signingCertificate = (X509Certificate) cert;
-						break;
-					}
-				}
-			}
+			this.signingCertificate = getCertificate(keyStore);
+			this.privateKey = getPrivateKey(keyStore, password);
 
 			if (this.signingCertificate == null || this.privateKey == null) {
 				throw new IllegalStateException("KeyStore must contain a PrivateKey and Certificate");
@@ -80,7 +71,7 @@ public class PassSignerImpl implements PassSigner {
 		}
 
 		public Builder intermediateCertificate(InputStream inputStream) throws CertificateException, NoSuchProviderException, IOException {
-			this.intermediateCertificate = PassSigningUtil.loadDERCertificate(inputStream);
+			this.intermediateCertificate = loadDERCertificate(inputStream);
 			return this;
 		}
 
@@ -95,11 +86,6 @@ public class PassSignerImpl implements PassSigner {
 			}
 
 			return new PassSignerImpl(signingCertificate, privateKey, intermediateCertificate);
-		}
-
-		private static final char[] chars(String password) {
-			if (password == null) return new char[0];
-			return password.toCharArray();
 		}
 
 	}
