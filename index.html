@@ -1,34 +1,44 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
   <head>
-    <meta charset='utf-8'>
+    <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
-
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-
     <title>passkit4j by ryantenney</title>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="javascripts/respond.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!--[if lt IE 8]>
+    <link rel="stylesheet" href="stylesheets/ie.css">
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
   </head>
-
   <body>
-    <header>
-      <div class="inner">
-        <h1>passkit4j</h1>
-        <h2>Apple Passbook library for Java</h2>
-        <a href="https://github.com/ryantenney/passkit4j" class="button"><small>View project on</small>GitHub</a>
-      </div>
-    </header>
+      <div id="header">
+        <nav>
+          <li class="fork"><a href="https://github.com/ryantenney/passkit4j">View On GitHub</a></li>
+          <li class="downloads"><a href="https://github.com/ryantenney/passkit4j/zipball/master">ZIP</a></li>
+          <li class="downloads"><a href="https://github.com/ryantenney/passkit4j/tarball/master">TAR</a></li>
+          <li class="title">DOWNLOADS</li>
+        </nav>
+      </div><!-- end header -->
 
-    <div id="content-wrapper">
-      <div class="inner clearfix">
-        <section id="main-content">
-          <h1>passkit4j <a href="https://travis-ci.org/ryantenney/passkit4j"><img src="https://secure.travis-ci.org/ryantenney/passkit4j.png?branch=master" alt="Build Status"></a>
+    <div class="wrapper">
+
+      <section>
+        <div id="title">
+          <h1>passkit4j</h1>
+          <p>Apple Passbook library for Java</p>
+          <hr>
+          <span class="credits left">Project maintained by <a href="https://github.com/ryantenney">ryantenney</a></span>
+          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="http://twitter.com/#!/michigangraham">mattgraham</a></span>
+        </div>
+
+        <h1>passkit4j <a href="https://travis-ci.org/ryantenney/passkit4j"><img src="https://secure.travis-ci.org/ryantenney/passkit4j.png?branch=master" alt="Build Status"></a>
 </h1>
 
 <h2>Apple Passbook library for Java</h2>
@@ -36,11 +46,7 @@
 <ul>
 <li>Fluent API</li>
 <li>Stream-oriented</li>
-</ul><h3>Status</h3>
-
-<p>Currently at 1.0.0-SNAPSHOT and has not seen a stable release. v1.0.0 should drop the first week of December 2012.</p>
-
-<h3>Usage</h3>
+</ul><h3>Usage</h3>
 
 <p>Create a Pass Type ID in the <a href="https://developer.apple.com/ios/manage/passtypeids/index.action">iOS Provisioning Portal</a> (if you haven't done so already), import the resulting <code>pass.cer</code> file into Keychain, then export it as a <code>.p12</code> file. Download the <a href="http://developer.apple.com/certificationauthority/AppleWWDRCA.cer">Apple WWDR certificate</a>.</p>
 
@@ -62,20 +68,12 @@
 
 <h3>Maven</h3>
 
-<p>Stable releases will be availble from Maven Central, until then snapshots are available from the Sonatype OSS repository.</p>
+<p>The first release, v1.0.0 dropped on November 26th, 2012</p>
 
-<div class="highlight"><pre><span class="nt">&lt;repository&gt;</span>
-    <span class="nt">&lt;id&gt;</span>sonatype-oss-public<span class="nt">&lt;/id&gt;</span>
-    <span class="nt">&lt;url&gt;</span>https://oss.sonatype.org/content/groups/public/<span class="nt">&lt;/url&gt;</span>
-    <span class="nt">&lt;snapshots&gt;</span>
-        <span class="nt">&lt;enabled&gt;</span>true<span class="nt">&lt;/enabled&gt;</span>
-    <span class="nt">&lt;/snapshots&gt;</span>
-<span class="nt">&lt;/repository&gt;</span>
-
-<span class="nt">&lt;dependency&gt;</span>
+<div class="highlight"><pre><span class="nt">&lt;dependency&gt;</span>
     <span class="nt">&lt;groupId&gt;</span>com.ryantenney.passkit4j<span class="nt">&lt;/groupId&gt;</span>
     <span class="nt">&lt;artifactId&gt;</span>passkit4j<span class="nt">&lt;/artifactId&gt;</span>
-    <span class="nt">&lt;version&gt;</span>1.0.0-SNAPSHOT<span class="nt">&lt;/version&gt;</span>
+    <span class="nt">&lt;version&gt;</span>1.0.0<span class="nt">&lt;/version&gt;</span>
 <span class="nt">&lt;/dependency&gt;</span>
 </pre></div>
 
@@ -84,25 +82,10 @@
 <p>Copyright (c) 2012 Ryan Tenney</p>
 
 <p><a href="http://rochestermade.com"><img src="http://rochestermade.com/media/images/rochester-made-dark-on-light.png" alt="Rochester Made"></a></p>
-        </section>
+      </section>
 
-        <aside id="sidebar">
-          <a href="https://github.com/ryantenney/passkit4j/zipball/master" class="button">
-            <small>Download</small>
-            .zip file
-          </a>
-          <a href="https://github.com/ryantenney/passkit4j/tarball/master" class="button">
-            <small>Download</small>
-            .tar.gz file
-          </a>
-
-          <p class="repo-owner"><a href="https://github.com/ryantenney/passkit4j"></a> is maintained by <a href="https://github.com/ryantenney">ryantenney</a>.</p>
-
-          <p>This page was generated by <a href="pages.github.com">GitHub Pages</a> using the Architect theme by <a href="http://twitter.com/jasonlong">Jason Long</a>.</p>
-        </aside>
-      </div>
     </div>
-
-  
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+    
   </body>
 </html>
