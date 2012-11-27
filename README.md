@@ -5,10 +5,6 @@
  - Fluent API
  - Stream-oriented
 
-### Status
-
-Currently at 1.0.0-SNAPSHOT and has not seen a stable release. v1.0.0 should drop the first week of December 2012.
-
 ### Usage
 
 Create a Pass Type ID in the [iOS Provisioning Portal](https://developer.apple.com/ios/manage/passtypeids/index.action) (if you haven't done so already), import the resulting `pass.cer` file into Keychain, then export it as a `.p12` file. Download the [Apple WWDR certificate](http://developer.apple.com/certificationauthority/AppleWWDRCA.cer).
@@ -32,21 +28,13 @@ PassSerializer.writePkPassArchive(pass, signer, outputStream);
 
 ### Maven
 
-Stable releases will be availble from Maven Central, until then snapshots are available from the Sonatype OSS repository.
+The first release, v1.0.0 dropped on November 26th, 2012
 
 ```xml
-<repository>
-	<id>sonatype-oss-public</id>
-	<url>https://oss.sonatype.org/content/groups/public/</url>
-	<snapshots>
-		<enabled>true</enabled>
-	</snapshots>
-</repository>
-
 <dependency>
 	<groupId>com.ryantenney.passkit4j</groupId>
 	<artifactId>passkit4j</artifactId>
-	<version>1.0.0-SNAPSHOT</version>
+	<version>1.0.0</version>
 </dependency>
 ```
 
