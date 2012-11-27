@@ -4,7 +4,7 @@
 	<groupId>com.ryantenney.passkit4j</groupId>
 	<artifactId>passkit4j</artifactId>
 	<packaging>jar</packaging>
-	<version>1.0.0</version>
+	<version>1.0.1-SNAPSHOT</version>
 	<url>https://github.com/ryantenney/passkit4j</url>
 	<name>Passkit4j</name>
 	<description>Passbook Library for Java</description>
