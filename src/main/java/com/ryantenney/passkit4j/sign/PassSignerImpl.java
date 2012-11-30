@@ -55,13 +55,25 @@ public class PassSignerImpl implements PassSigner {
 		private X509Certificate intermediateCertificate;
 
 		public Builder keystore(InputStream inputStream, String password) throws NoSuchAlgorithmException, CertificateException, KeyStoreException, NoSuchProviderException, IOException, UnrecoverableKeyException {
+			return this.keystore(inputStream, null, password);
+		}
+
+		public Builder keystore(InputStream inputStream, String alias, String password) throws NoSuchAlgorithmException, CertificateException, KeyStoreException, NoSuchProviderException, IOException, UnrecoverableKeyException {
 			KeyStore keyStore = loadPKCS12File(inputStream, password);
-			return this.keystore(keyStore, password);
+			return this.keystore(keyStore, alias, password);
 		}
 
 		public Builder keystore(KeyStore keyStore, String password) throws UnrecoverableKeyException, KeyStoreException, NoSuchAlgorithmException {
-			this.signingCertificate = getCertificate(keyStore);
-			this.privateKey = getPrivateKey(keyStore, password);
+			return this.keystore(keyStore, null, password);
+		}
+
+		public Builder keystore(KeyStore keyStore, String alias, String password) throws UnrecoverableKeyException, KeyStoreException, NoSuchAlgorithmException {
+			if (alias == null) {
+				alias = firstAlias(keyStore);
+			}
+
+			this.signingCertificate = getCertificate(keyStore, alias);
+			this.privateKey = getPrivateKey(keyStore, alias, password);
 
 			if (this.signingCertificate == null || this.privateKey == null) {
 				throw new IllegalStateException("KeyStore must contain a PrivateKey and Certificate");

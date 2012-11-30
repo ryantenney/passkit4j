@@ -43,12 +43,12 @@ class PassSigningUtil {
 		}
 	}
 
-	static PrivateKey getPrivateKey(KeyStore keyStore, String password) throws KeyStoreException, UnrecoverableKeyException, NoSuchAlgorithmException {
-		return (PrivateKey) keyStore.getKey(firstAlias(keyStore), chars(password));
+	static PrivateKey getPrivateKey(KeyStore keyStore, String alias, String password) throws KeyStoreException, UnrecoverableKeyException, NoSuchAlgorithmException {
+		return (PrivateKey) keyStore.getKey(alias, chars(password));
 	}
 
-	static X509Certificate getCertificate(KeyStore keyStore) throws KeyStoreException {
-		return (X509Certificate) keyStore.getCertificate(firstAlias(keyStore));
+	static X509Certificate getCertificate(KeyStore keyStore, String alias) throws KeyStoreException {
+		return (X509Certificate) keyStore.getCertificate(alias);
 	}
 
 	static String firstAlias(KeyStore keyStore) throws KeyStoreException {
