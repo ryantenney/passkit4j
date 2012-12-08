@@ -44,5 +44,6 @@ The first release, v1.0.0 dropped on November 26th, 2012
 
 Copyright (c) 2012 Ryan Tenney
 
+Published under Apache Software License 2.0, see LICENSE
 
 [![Rochester Made](http://rochestermade.com/media/images/rochester-made-dark-on-light.png)](http://rochestermade.com)
