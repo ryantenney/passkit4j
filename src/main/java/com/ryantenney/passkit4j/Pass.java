@@ -6,6 +6,7 @@ import lombok.NonNull;
 import lombok.experimental.Accessors;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -50,6 +51,9 @@ public class Pass {
 	@JsonIgnore private List<PassResource> files;
 
 	public List<PassResource> files() {
+		if (this.files == null) {
+			return Collections.emptyList();
+		}
 		return this.files;
 	}
 
