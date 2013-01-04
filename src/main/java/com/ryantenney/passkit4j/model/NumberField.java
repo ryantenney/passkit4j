@@ -16,7 +16,7 @@ public class NumberField implements Field<Number> {
 	private TextAlignment textAlignment = TextAlignment.LEFT;
 
 	@NonNull private Number value;
-	private NumberStyle numberStyle = NumberStyle.DECIMAL;
+	private NumberStyle numberStyle = null;
 	private String currencyCode = null;
 
 }
