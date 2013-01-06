@@ -14,6 +14,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.util.ISO8601Utils;
 import com.ryantenney.passkit4j.model.Barcode;
 import com.ryantenney.passkit4j.model.Color;
 import com.ryantenney.passkit4j.model.Location;
@@ -92,6 +93,21 @@ public class Pass {
 
 	public Pass associatedStoreIdentifiers(String... values) {
 		this.associatedStoreIdentifiers = Arrays.asList(values);
+		return this;
+	}
+
+	public Pass relevantDate(Date relevantDate) {
+		this.relevantDate = relevantDate;
+		return this;
+	}
+
+	public Pass relevantDate(long timestamp) {
+		this.relevantDate = new Date(timestamp);
+		return this;
+	}
+
+	public Pass relevantDate(String iso8601dateString) {
+		this.relevantDate = ISO8601Utils.parse(iso8601dateString);
 		return this;
 	}
 
