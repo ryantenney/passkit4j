@@ -1,5 +1,6 @@
 package com.ryantenney.passkit4j;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 
@@ -17,36 +18,41 @@ public class StoreCardExample {
 			.teamIdentifier("asdfasdfasdf")
 			.passTypeIdentifier("pass.com.bouldercoffeeco.storeCard")
 			.organizationName("Boulder Coffee Co.")
-			.description("Boulder Coffee Rewards Card Example")
+			.description("Boulder Coffee Rewards Card")
 			.serialNumber("p69f2J")
-			.webServiceURL("https://example.com/passes/")
-			.authenticationToken("vxwxd7J8AlNNFPS8k0a0FfUFtq0ewzFdc")
-			.locations(new Location(37.6189722, -122.3748889))
+			.locations(
+				new Location(43.145863, -77.602690),
+				new Location(43.131063, -77.636425),
+				new Location(43.147528, -77.576051),
+				new Location(43.155763, -77.612724),
+				new Location(43.165389, -77.589655)
+			)
 			.barcode(new Barcode(BarcodeFormat.PDF417, "12345678"))
-			.logoText("Boulder Coffee Co.")
+			.logoText("Boulder Coffee")
 			.foregroundColor(Color.WHITE)
 			.backgroundColor(new Color(118, 74, 50))
 			.files(
+				new PassResource("en.lproj/pass.strings", new File("src/test/resources/storecard/en.lproj/pass.strings")),
 				new PassResource("src/test/resources/storecard/icon.png"),
 				new PassResource("src/test/resources/storecard/icon@2x.png"),
 				new PassResource("src/test/resources/storecard/logo.png"),
 				new PassResource("src/test/resources/storecard/logo@2x.png"),
-				new PassResource("src/test/resources/storecard/background.png"),
-				new PassResource("src/test/resources/storecard/background@2x.png")
+				new PassResource("src/test/resources/storecard/strip.png"),
+				new PassResource("src/test/resources/storecard/strip@2x.png")
 			)
 			.passInformation(
 				new StoreCard()
-					.primaryFields(
-						new NumberField("balance", "remaining balance", 25)
+					.headerFields(
+						new NumberField("balance", "balance_label", 25)
+							.textAlignment(TextAlignment.RIGHT)
 							.currencyCode("USD")
 					)
 					.auxiliaryFields(
-						new TextField("level", "LEVEL", "Gold"),
-						new TextField("usual", "THE USUAL", "Iced Mocha")
+						new TextField("level", "level_label", "level_gold"),
+						new TextField("usual", "usual_label", "Iced Mocha")
 					)
 					.backFields(
-						new TextField("terms", "TERMS AND CONDITIONS",
-							"Generico offers this pass, including all information, software, products and services available from this pass or offered as part of or in conjunction with this pass (the \"pass\"), to you, the user, conditioned upon your acceptance of all of the terms, conditions, policies and notices stated here. Generico reserves the right to make changes to these Terms and Conditions immediately by posting the changed Terms and Conditions in this location.\n\nUse the pass at your own risk. This pass is provided to you \"as is,\" without warranty of any kind either express or implied. Neither Generico nor its employees, agents, third-party information providers, merchants, licensors or the like warrant that the pass or its operation will be accurate, reliable, uninterrupted or error-free. No agent or representative has the authority to create any warranty regarding the pass on behalf of Generico. Generico reserves the right to change or discontinue at any time any aspect or feature of the pass.")
+						new TextField("terms", "terms_label", "terms_value")
 					)
 			);
 
