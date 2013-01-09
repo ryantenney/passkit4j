@@ -11,12 +11,17 @@ import lombok.experimental.Accessors;
 public class NumberField implements Field<Number> {
 
 	@NonNull private String key;
-	@NonNull private String label;
+	private String label;
 	private String changeMessage;
-	private TextAlignment textAlignment = TextAlignment.LEFT;
+	private TextAlignment textAlignment;
 
 	@NonNull private Number value;
-	private NumberStyle numberStyle = null;
-	private String currencyCode = null;
+	private NumberStyle numberStyle;
+	private String currencyCode;
+
+	public NumberField(String key, String label, Number value) {
+		this(key, value);
+		this.label = label;
+	}
 
 }
