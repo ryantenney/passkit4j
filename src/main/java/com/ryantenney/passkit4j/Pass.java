@@ -46,7 +46,7 @@ public class Pass {
 	private List<Location> locations;
 	private Date relevantDate;
 
-	private List<String> associatedStoreIdentifiers;
+	private List<Long> associatedStoreIdentifiers;
 
 	@JsonIgnore private PassInformation passInformation;
 	@JsonIgnore private List<PassResource> files;
@@ -82,16 +82,16 @@ public class Pass {
 		return this;
 	}
 
-	public List<String> associatedStoreIdentifiers() {
+	public List<Long> associatedStoreIdentifiers() {
 		return this.associatedStoreIdentifiers;
 	}
 
-	public Pass associatedStoreIdentifiers(List<String> values) {
+	public Pass associatedStoreIdentifiers(List<Long> values) {
 		this.associatedStoreIdentifiers = values;
 		return this;
 	}
 
-	public Pass associatedStoreIdentifiers(String... values) {
+	public Pass associatedStoreIdentifiers(Long... values) {
 		this.associatedStoreIdentifiers = Arrays.asList(values);
 		return this;
 	}
