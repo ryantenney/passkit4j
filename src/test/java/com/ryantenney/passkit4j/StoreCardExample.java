@@ -21,11 +21,11 @@ public class StoreCardExample {
 			.description("Boulder Coffee Rewards Card")
 			.serialNumber("p69f2J")
 			.locations(
-				new Location(43.145863, -77.602690),
-				new Location(43.131063, -77.636425),
-				new Location(43.147528, -77.576051),
-				new Location(43.155763, -77.612724),
-				new Location(43.165389, -77.589655)
+				new Location(43.145863, -77.602690).relevantText("South Wedge"),
+				new Location(43.131063, -77.636425).relevantText("Brooks Landing"),
+				new Location(43.147528, -77.576051).relevantText("Park Avenue"),
+				new Location(43.155763, -77.612724).relevantText("State Street"),
+				new Location(43.165389, -77.589655).relevantText("Public Market")
 			)
 			.barcode(new Barcode(BarcodeFormat.PDF417, "12345678"))
 			.logoText("Boulder Coffee")

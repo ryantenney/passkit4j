@@ -19,6 +19,7 @@ public class EventTicketExample {
 			.organizationName("Apple Inc.")
 			.description("Apple Event Ticket")
 			.serialNumber("nmyuxofgnb")
+			.relevantDate("2011-12-08T13:00:00-08:00")
 			.locations(
 				new Location(37.6189722, -122.3748889),
 				new Location(37.33182, -122.03118)
@@ -33,8 +34,6 @@ public class EventTicketExample {
 				new PassResource("src/test/resources/eventticket/logo@2x.png"),
 				new PassResource("src/test/resources/eventticket/background.png"),
 				new PassResource("src/test/resources/eventticket/background@2x.png")
-				//new PassResource("src/test/resources/eventticket/thumbnail.png"),
-				//new PassResource("src/test/resources/eventticket/thumbnail@2x.png")
 			)
 			.passInformation(
 				new EventTicket()
