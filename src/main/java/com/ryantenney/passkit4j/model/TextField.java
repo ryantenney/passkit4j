@@ -11,10 +11,15 @@ import lombok.experimental.Accessors;
 public class TextField implements Field<String> {
 
 	@NonNull private String key;
-	@NonNull private String label;
+	private String label;
 	private String changeMessage;
-	private TextAlignment textAlignment = TextAlignment.LEFT;
+	private TextAlignment textAlignment;
 
 	@NonNull private String value;
+
+	public TextField(String key, String label, String value) {
+		this(key, value);
+		this.label = label;
+	}
 
 }

@@ -15,13 +15,18 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class DateField implements Field<Date> {
 
 	@NonNull private String key;
-	@NonNull private String label;
+	private String label;
 	private String changeMessage;
-	private TextAlignment textAlignment = TextAlignment.LEFT;
+	private TextAlignment textAlignment;
 
 	@NonNull private Date value;
-	private DateStyle dateStyle = DateStyle.SHORT;
-	private DateStyle timeStyle = DateStyle.SHORT;
+	private DateStyle dateStyle;
+	private DateStyle timeStyle;
 	@JsonProperty("isRelative") private boolean relative = false;
+
+	public DateField(String key, String label, Date value) {
+		this(key, value);
+		this.label = label;
+	}
 
 }
