@@ -37,6 +37,8 @@ import com.ryantenney.passkit4j.sign.PassSigningException;
 
 public class PassSerializer {
 
+	public static final String PKPASS_TYPE = "application/vnd.apple.pkpass";
+
 	private static final ObjectMapper objectMapper;
 
 	static {
