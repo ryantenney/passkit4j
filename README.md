@@ -28,13 +28,11 @@ PassSerializer.writePkPassArchive(pass, signer, outputStream);
 
 ### Maven
 
-The first release, v1.0.0 dropped on November 26th, 2012
-
 ```xml
 <dependency>
 	<groupId>com.ryantenney.passkit4j</groupId>
 	<artifactId>passkit4j</artifactId>
-	<version>1.0.0</version>
+	<version>1.0.1</version>
 </dependency>
 ```
 

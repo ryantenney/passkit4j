@@ -9,6 +9,12 @@
 	<name>Passkit4j</name>
 	<description>Passbook Library for Java</description>
 
+	<parent>
+		<groupId>org.sonatype.oss</groupId>
+		<artifactId>oss-parent</artifactId>
+		<version>7</version>
+	</parent>
+
 	<licenses>
 		<license>
 			<name>The Apache Software License, Version 2.0</name>
@@ -27,18 +33,6 @@
 		<url>https://github.com/ryantenney/passkit4j/issues</url>
 	</issueManagement>
 
-	<distributionManagement>
-		<snapshotRepository>
-			<id>sonatype-nexus-snapshots</id>
-			<name>Sonatype Nexus Snapshots</name>
-			<url>http://oss.sonatype.org/content/repositories/snapshots</url>
-		</snapshotRepository>
-		<repository>
-			<id>sonatype-nexus-staging</id>
-			<name>Nexus Release Repository</name>
-			<url>http://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-		</repository>
-	</distributionManagement>
 
 	<developers>
 		<developer>
@@ -171,9 +165,10 @@
 
 			<plugin>
 				<artifactId>maven-release-plugin</artifactId>
-				<version>2.2</version>
+				<version>2.4</version>
 				<configuration>
 					<allowTimestampedSnapshots>true</allowTimestampedSnapshots>
+					<tagNameFormat>v@{project.version}</tagNameFormat>
 					<!-- Make signing prompt for passphrase properly http://jira.codehaus.org/browse/MGPG-9 -->
 					<mavenExecutorId>forked-path</mavenExecutorId>
 					<stagingRepository>sonatype-nexus-staging::default::https://oss.sonatype.org/service/local/staging/deploy/maven2</stagingRepository>
@@ -226,34 +221,6 @@
 								<systemPath>${java.home}/../lib/tools.jar</systemPath>
 							</dependency>
 						</dependencies>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
-
-		<profile>
-			<id>release-sign-artifacts</id>
-			<activation>
-				<property>
-					<name>performRelease</name>
-					<value>true</value>
-				</property>
-			</activation>
-			<build>
-				<plugins>
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-gpg-plugin</artifactId>
-						<version>1.1</version>
-						<executions>
-							<execution>
-								<id>sign-artifacts</id>
-								<phase>verify</phase>
-								<goals>
-									<goal>sign</goal>
-								</goals>
-							</execution>
-						</executions>
 					</plugin>
 				</plugins>
 			</build>
