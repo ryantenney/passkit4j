@@ -97,12 +97,12 @@ public class PassSerializer {
 		return node;
 	}
 
-	protected static Map<String, String> writeAndHashFiles(List<PassResource> files, ZipOutputStream output) throws IOException, NoSuchAlgorithmException, DigestException, NoSuchProviderException {
+	protected static Map<String, String> writeAndHashFiles(List<NamedInputStreamSupplier> files, ZipOutputStream output) throws IOException, NoSuchAlgorithmException, DigestException, NoSuchProviderException {
 		Map<String, String> hashes = new HashMap<String, String>();
-		for (PassResource file : files) {
-			OutputStreamHasher hasher = hasher(zipEntry(file.name(), output));
-			copy(file.data(), hasher);
-			hashes.put(file.name(), hasher.hash());
+		for (NamedInputStreamSupplier file : files) {
+			OutputStreamHasher hasher = hasher(zipEntry(file.getName(), output));
+			copy(file.getInputStream(), hasher);
+			hashes.put(file.getName(), hasher.hash());
 		}
 		return hashes;
 	}

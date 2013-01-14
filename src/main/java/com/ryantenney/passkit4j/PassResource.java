@@ -1,16 +1,12 @@
 package com.ryantenney.passkit4j;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 
-import lombok.Data;
-import lombok.experimental.Accessors;
-
-@Data
-@Accessors(fluent=true)
-public class PassResource {
+public class PassResource implements NamedInputStreamSupplier {
 
 	private final String name;
 	private final InputStream data;
@@ -27,9 +23,23 @@ public class PassResource {
 		this(name, new FileInputStream(file));
 	}
 
+	public PassResource(final String name, final byte[] data) throws FileNotFoundException {
+		this(name, new ByteArrayInputStream(data));
+	}
+
 	public PassResource(final String name, final InputStream data) {
 		this.name = name;
 		this.data = data;
+	}
+
+	@Override
+	public String getName() {
+		return name;
+	}
+
+	@Override
+	public InputStream getInputStream() {
+		return data;
 	}
 
 }

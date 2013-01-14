@@ -49,21 +49,21 @@ public class Pass {
 	private List<Long> associatedStoreIdentifiers;
 
 	@JsonIgnore private PassInformation passInformation;
-	@JsonIgnore private List<PassResource> files;
+	@JsonIgnore private List<NamedInputStreamSupplier> files;
 
-	public List<PassResource> files() {
+	public List<NamedInputStreamSupplier> files() {
 		if (this.files == null) {
 			return Collections.emptyList();
 		}
 		return this.files;
 	}
 
-	public Pass files(List<PassResource> values) {
+	public Pass files(List<NamedInputStreamSupplier> values) {
 		this.files = values;
 		return this;
 	}
 
-	public Pass files(PassResource... values) {
+	public Pass files(NamedInputStreamSupplier... values) {
 		this.files = Arrays.asList(values);
 		return this;
 	}
