@@ -6,6 +6,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class PassResource implements NamedInputStreamSupplier {
 
@@ -34,6 +35,20 @@ public class PassResource implements NamedInputStreamSupplier {
 			@Override
 			public InputStream getInputStream() throws IOException {
 				return new ByteArrayInputStream(data);
+			}
+		});
+	}
+
+	public PassResource(final String name, final InputStream data) {
+		this(name, new InputStreamSupplier() {
+			private final AtomicBoolean avail = new AtomicBoolean();
+
+			@Override
+			public InputStream getInputStream() throws IOException {
+				if (!avail.compareAndSet(false, true)) {
+					throw new IOException("PassResource '" + name + "' has been consumed");
+				}
+				return data;
 			}
 		});
 	}
