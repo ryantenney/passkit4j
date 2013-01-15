@@ -4,32 +4,43 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 
 public class PassResource implements NamedInputStreamSupplier {
 
 	private final String name;
-	private final InputStream data;
+	private final InputStreamSupplier dataSupplier;
 
 	public PassResource(final String filename) throws FileNotFoundException {
 		this(new File(filename));
 	}
 
 	public PassResource(final File file) throws FileNotFoundException {
-		this(file.getName(), new FileInputStream(file));
+		this(file.getName(), file);
 	}
 
-	public PassResource(final String name, final File file) throws FileNotFoundException {
-		this(name, new FileInputStream(file));
+	public PassResource(final String name, final File file) {
+		this(name, new InputStreamSupplier() {
+			@Override
+			public InputStream getInputStream() throws IOException {
+				return new FileInputStream(file);
+			}
+		});
 	}
 
-	public PassResource(final String name, final byte[] data) throws FileNotFoundException {
-		this(name, new ByteArrayInputStream(data));
+	public PassResource(final String name, final byte[] data) {
+		this(name, new InputStreamSupplier() {
+			@Override
+			public InputStream getInputStream() throws IOException {
+				return new ByteArrayInputStream(data);
+			}
+		});
 	}
 
-	public PassResource(final String name, final InputStream data) {
+	public PassResource(final String name, final InputStreamSupplier dataSupplier) {
 		this.name = name;
-		this.data = data;
+		this.dataSupplier = dataSupplier;
 	}
 
 	@Override
@@ -38,8 +49,8 @@ public class PassResource implements NamedInputStreamSupplier {
 	}
 
 	@Override
-	public InputStream getInputStream() {
-		return data;
+	public InputStream getInputStream() throws IOException {
+		return dataSupplier.getInputStream();
 	}
 
 }
