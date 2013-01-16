@@ -9,12 +9,14 @@ import java.io.InputStream;
 
 public class BufferedPassResource extends PassResource {
 
+	private static final int DEFAULT_BUFFER_SIZE = 32768;
+
 	public BufferedPassResource(final String filename) throws IOException {
 		this(new File(filename));
 	}
 
 	public BufferedPassResource(final File file) throws IOException {
-		this(file.getName(), new FileInputStream(file));
+		this(file.getName(), file);
 	}
 
 	public BufferedPassResource(final String name, final File file) throws IOException {
@@ -39,7 +41,7 @@ public class BufferedPassResource extends PassResource {
 	}
 
 	private static byte[] read(InputStream input, int length) throws IOException {
-		ByteArrayOutputStream out = new ByteArrayOutputStream(length);
+		ByteArrayOutputStream out = new ByteArrayOutputStream(length == -1 ? DEFAULT_BUFFER_SIZE : length);
 		int read = 0;
 		byte[] buf = new byte[4096];
 		while ((read = input.read(buf)) != -1) {
