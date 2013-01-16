@@ -31,6 +31,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
+import com.ryantenney.passkit4j.io.NamedInputStreamSupplier;
 import com.ryantenney.passkit4j.model.PassInformation;
 import com.ryantenney.passkit4j.sign.PassSigner;
 import com.ryantenney.passkit4j.sign.PassSigningException;

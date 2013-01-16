@@ -7,6 +7,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import com.ryantenney.passkit4j.io.InputStreamSupplier;
+
 public class BufferedPassResource extends PassResource {
 
 	private static final int DEFAULT_BUFFER_SIZE = 32768;

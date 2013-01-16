@@ -8,6 +8,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import com.ryantenney.passkit4j.io.InputStreamSupplier;
+import com.ryantenney.passkit4j.io.NamedInputStreamSupplier;
+
 public class PassResource implements NamedInputStreamSupplier {
 
 	private final String name;

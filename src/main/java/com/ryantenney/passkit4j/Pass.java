@@ -15,6 +15,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.util.ISO8601Utils;
+import com.ryantenney.passkit4j.io.NamedInputStreamSupplier;
 import com.ryantenney.passkit4j.model.Barcode;
 import com.ryantenney.passkit4j.model.Color;
 import com.ryantenney.passkit4j.model.Location;

@@ -1,4 +1,4 @@
-package com.ryantenney.passkit4j;
+package com.ryantenney.passkit4j.io;
 
 public interface NamedInputStreamSupplier extends InputStreamSupplier {
 
