@@ -1,5 +1,8 @@
 package com.ryantenney.passkit4j.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
 import lombok.Data;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +18,7 @@ public class TextField implements Field<String> {
 	private String changeMessage;
 	private TextAlignment textAlignment;
 
-	@NonNull private String value;
+	@NonNull @JsonInclude(Include.ALWAYS) private String value;
 
 	public TextField(String key, String label, String value) {
 		this(key, value);

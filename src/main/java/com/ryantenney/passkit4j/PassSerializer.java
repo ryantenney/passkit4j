@@ -37,7 +37,8 @@ import com.ryantenney.passkit4j.sign.PassSigningException;
 
 public class PassSerializer {
 
-	private static final ObjectMapper objectMapper;
+	// package private for testing purposes
+	static final ObjectMapper objectMapper;
 
 	static {
 		objectMapper = new ObjectMapper();
