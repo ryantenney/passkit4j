@@ -2,11 +2,13 @@ package com.ryantenney.passkit4j.model;
 
 import lombok.Data;
 import lombok.NonNull;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.Accessors;
 
 @Data
 @Accessors(chain=true, fluent=true)
+@NoArgsConstructor
 @RequiredArgsConstructor
 public class NumberField implements Field<Number> {
 

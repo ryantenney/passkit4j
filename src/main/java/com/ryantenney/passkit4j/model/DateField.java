@@ -4,6 +4,7 @@ import java.util.Date;
 
 import lombok.Data;
 import lombok.NonNull;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.Accessors;
 
@@ -11,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Data
 @Accessors(chain=true, fluent=true)
+@NoArgsConstructor
 @RequiredArgsConstructor
 public class DateField implements Field<Date> {
 
