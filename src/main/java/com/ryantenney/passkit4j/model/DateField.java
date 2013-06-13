@@ -1,6 +1,7 @@
 package com.ryantenney.passkit4j.model;
 
 import java.util.Date;
+import java.util.Set;
 
 import lombok.Data;
 import lombok.NonNull;
@@ -18,6 +19,8 @@ public class DateField implements Field<Date> {
 	private String label;
 	private String changeMessage;
 	private TextAlignment textAlignment;
+	private Set<DataDetectorType> dataDetectorTypes;
+	private String attributedValue;
 
 	@NonNull private Date value;
 	private DateStyle dateStyle;

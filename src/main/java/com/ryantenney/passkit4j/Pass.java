@@ -14,9 +14,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.util.ISO8601Utils;
 import com.ryantenney.passkit4j.io.NamedInputStreamSupplier;
 import com.ryantenney.passkit4j.model.Barcode;
+import com.ryantenney.passkit4j.model.Beacon;
 import com.ryantenney.passkit4j.model.Color;
 import com.ryantenney.passkit4j.model.Location;
 import com.ryantenney.passkit4j.model.PassInformation;
@@ -26,31 +28,63 @@ import com.ryantenney.passkit4j.model.PassInformation;
 @Accessors(chain=true, fluent=true)
 public class Pass {
 
-	@NonNull private String teamIdentifier;
-	@NonNull private String passTypeIdentifier;
-	@NonNull private String organizationName;
-	@NonNull private String serialNumber;
+
+	// Standard Keys
+
 	@NonNull private String description;
+	@NonNull private String organizationName;
+	@NonNull private String passTypeIdentifier;
+	@NonNull private String serialNumber;
+	@NonNull private String teamIdentifier;
 
 	@JsonProperty("formatVersion") private final int $formatVersion = 1;
 
+
+	// Visual Appearance Keys
+
+	private Barcode barcode;
 	private Color backgroundColor;
 	private Color foregroundColor;
+	private String groupingIdentifier;
 	private Color labelColor;
 	private String logoText;
-	private Barcode barcode;
 	@JsonInclude(Include.NON_DEFAULT) private boolean suppressStripShine = false;
+
+
+	// Web Service Keys
 
 	private String webServiceURL;
 	private String authenticationToken;
 
+
+	// Relevance Keys
+	private boolean ignoresTimeZone = false;
 	private List<Location> locations;
+	private List<Beacon> beacons;
+	private Integer maxDistance;
 	private Date relevantDate;
 
+
+	// Associated App Keys
+
 	private List<Long> associatedStoreIdentifiers;
+	private String appLaunchURL;
+
+
+	// Companion App Keys
+
+	private JsonNode userInfo;
+
+
+	// Expiration Keys
+
+	private Date expirationDate;
+	@JsonInclude(Include.NON_DEFAULT) private boolean voided = false;
+
 
 	@JsonIgnore private PassInformation passInformation;
 	@JsonIgnore private List<NamedInputStreamSupplier> files;
+
 
 	public List<NamedInputStreamSupplier> files() {
 		if (this.files == null) {
@@ -83,6 +117,20 @@ public class Pass {
 		return this;
 	}
 
+	public List<Beacon> beacons() {
+		return this.beacons;
+	}
+
+	public Pass beacons(List<Beacon> values) {
+		this.beacons = values;
+		return this;
+	}
+
+	public Pass beacons(Beacon... values) {
+		this.beacons = Arrays.asList(values);
+		return this;
+	}
+
 	public List<Long> associatedStoreIdentifiers() {
 		return this.associatedStoreIdentifiers;
 	}
@@ -109,6 +157,21 @@ public class Pass {
 
 	public Pass relevantDate(String iso8601dateString) {
 		this.relevantDate = ISO8601Utils.parse(iso8601dateString);
+		return this;
+	}
+
+	public Pass expirationDate(Date expirationDate) {
+		this.expirationDate = expirationDate;
+		return this;
+	}
+
+	public Pass expirationDate(long timestamp) {
+		this.expirationDate = new Date(timestamp);
+		return this;
+	}
+
+	public Pass expirationDate(String iso8601dateString) {
+		this.expirationDate = ISO8601Utils.parse(iso8601dateString);
 		return this;
 	}
 

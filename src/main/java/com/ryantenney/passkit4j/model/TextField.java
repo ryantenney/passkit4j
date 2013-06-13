@@ -1,5 +1,7 @@
 package com.ryantenney.passkit4j.model;
 
+import java.util.Set;
+
 import lombok.Data;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +16,8 @@ public class TextField implements Field<String> {
 	private String label;
 	private String changeMessage;
 	private TextAlignment textAlignment;
+	private Set<DataDetectorType> dataDetectorTypes;
+	private String attributedValue;
 
 	@NonNull private String value;
 
