@@ -8,10 +8,11 @@ import java.security.PrivateKey;
 import java.security.cert.X509Certificate;
 import java.util.Arrays;
 
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.Accessors;
 
 import org.bouncycastle.cert.jcajce.JcaCertStore;
@@ -30,7 +31,8 @@ public class PassSignerImpl implements PassSigner {
 		return new Builder();
 	}
 
-	@Data
+	@Getter
+	@Setter
 	@Accessors(chain=true, fluent=true)
 	@NoArgsConstructor
 	public static class Builder {
