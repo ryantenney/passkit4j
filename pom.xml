@@ -242,7 +242,6 @@
 								<effort>Max</effort>
 								<threshold>Default</threshold>
 								<xmlOutput>true</xmlOutput>
-								<excludeFilterFile>findbugs-exclude.xml</excludeFilterFile>
 							</configuration>
 						</plugin>
 						<plugin>
