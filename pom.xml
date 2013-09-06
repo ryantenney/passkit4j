@@ -135,6 +135,13 @@
 							<goal>jar</goal>
 						</goals>
 					</execution>
+					<execution>
+						<id>aggregate</id>
+						<goals>
+							<goal>aggregate</goal>
+						</goals>
+						<phase>site</phase>
+					</execution>
 				</executions>
 				<configuration>
 					<defaultVersion>${project.version}</defaultVersion>
