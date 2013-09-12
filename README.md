@@ -28,32 +28,19 @@ PassSerializer.writePkPassArchive(pass, signer, outputStream);
 
 ### Maven
 
-Current stable version is 1.0.1
+Current stable version is 2.0.0, which supports new feautres in iOS 7.
 
 ```xml
 <dependency>
 	<groupId>com.ryantenney.passkit4j</groupId>
 	<artifactId>passkit4j</artifactId>
-	<version>1.0.1</version>
+	<version>2.0.0</version>
 </dependency>
 ```
 
-Development has begun on 2.0.0 to add support for iOS 7 Passbook features.
-2.0.0-SNAPSHOT is available from the Sonatype Nexus Snapshots repository.
+### Documentation
 
-```xml
-<repository>
-	<id>sonatype-nexus-snapshots</id>
-	<name>Sonatype Nexus Snapshots</name>
-	<url>http://oss.sonatype.org/content/repositories/snapshots</url>
-</repository>
-
-<dependency>
-	<groupId>com.ryantenney.passkit4j</groupId>
-	<artifactId>passkit4j</artifactId>
-	<version>2.0.0-SNAPSHOT</version>
-</dependency>
-```
+Javadocs are hosted at http://ryantenney.github.io/passkit4j/docs/
 
 ---
 
