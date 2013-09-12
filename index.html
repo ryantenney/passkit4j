@@ -4,55 +4,48 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <title>passkit4j by ryantenney</title>
+
     <link rel="stylesheet" href="stylesheets/styles.css">
     <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-    <script src="javascripts/respond.js"></script>
-    <!--[if lt IE 9]>
-      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-    <!--[if lt IE 8]>
-    <link rel="stylesheet" href="stylesheets/ie.css">
-    <![endif]-->
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
   </head>
   <body>
-      <div id="header">
-        <nav>
-          <li class="fork"><a href="https://github.com/ryantenney/passkit4j">View On GitHub</a></li>
-          <li class="downloads"><a href="https://github.com/ryantenney/passkit4j/zipball/master">ZIP</a></li>
-          <li class="downloads"><a href="https://github.com/ryantenney/passkit4j/tarball/master">TAR</a></li>
-          <li class="title">DOWNLOADS</li>
-        </nav>
-      </div><!-- end header -->
-
     <div class="wrapper">
+      <header>
+        <h1>passkit4j</h1>
+        <p>Apple Passbook library for Java</p>
 
+        <p class="view"><a href="https://github.com/ryantenney/passkit4j">View the Project on GitHub <small>ryantenney/passkit4j</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/ryantenney/passkit4j/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/ryantenney/passkit4j/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/ryantenney/passkit4j">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
       <section>
-        <div id="title">
-          <h1>passkit4j</h1>
-          <p>Apple Passbook library for Java</p>
-          <hr>
-          <span class="credits left">Project maintained by <a href="https://github.com/ryantenney">ryantenney</a></span>
-          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="http://twitter.com/#!/michigangraham">mattgraham</a></span>
-        </div>
-
-        <h1>passkit4j <a href="https://travis-ci.org/ryantenney/passkit4j"><img src="https://secure.travis-ci.org/ryantenney/passkit4j.png?branch=master" alt="Build Status"></a>
+        <h1>
+<a name="passkit4j-" class="anchor" href="#passkit4j-"><span class="octicon octicon-link"></span></a>passkit4j <a href="https://travis-ci.org/ryantenney/passkit4j"><img src="https://secure.travis-ci.org/ryantenney/passkit4j.png?branch=master" alt="Build Status"></a>
 </h1>
 
-<h2>Apple Passbook library for Java</h2>
+<h2>
+<a name="apple-passbook-library-for-java" class="anchor" href="#apple-passbook-library-for-java"><span class="octicon octicon-link"></span></a>Apple Passbook library for Java</h2>
 
 <ul>
 <li>Fluent API</li>
 <li>Stream-oriented</li>
-</ul><h3>Usage</h3>
+</ul><h3>
+<a name="usage" class="anchor" href="#usage"><span class="octicon octicon-link"></span></a>Usage</h3>
 
 <p>Create a Pass Type ID in the <a href="https://developer.apple.com/ios/manage/passtypeids/index.action">iOS Provisioning Portal</a> (if you haven't done so already), import the resulting <code>pass.cer</code> file into Keychain, then export it as a <code>.p12</code> file. Download the <a href="http://developer.apple.com/certificationauthority/AppleWWDRCA.cer">Apple WWDR certificate</a>.</p>
 
 <p>In the code, create a <code>PassSignerImpl</code> object with these certificates:</p>
 
-<div class="highlight"><pre><span class="n">PassSigner</span> <span class="n">signer</span> <span class="o">=</span> <span class="n">PassSignerImpl</span><span class="o">.</span><span class="na">builder</span><span class="o">()</span>
+<div class="highlight highlight-java"><pre><span class="n">PassSigner</span> <span class="n">signer</span> <span class="o">=</span> <span class="n">PassSignerImpl</span><span class="o">.</span><span class="na">builder</span><span class="o">()</span>
     <span class="o">.</span><span class="na">keystore</span><span class="o">(</span><span class="k">new</span> <span class="n">FileInputStream</span><span class="o">(</span><span class="s">"/path/to/certificate.p12"</span><span class="o">),</span> <span class="s">"password"</span><span class="o">)</span>
     <span class="o">.</span><span class="na">intermediateCertificate</span><span class="o">(</span><span class="k">new</span> <span class="n">FileInputStream</span><span class="o">(</span><span class="s">"/path/to/AppleWWDRCA.cer"</span><span class="o">))</span>
     <span class="o">.</span><span class="na">build</span><span class="o">();</span>
@@ -66,26 +59,48 @@
 <span class="n">PassSerializer</span><span class="o">.</span><span class="na">writePkPassArchive</span><span class="o">(</span><span class="n">pass</span><span class="o">,</span> <span class="n">signer</span><span class="o">,</span> <span class="n">outputStream</span><span class="o">);</span>
 </pre></div>
 
-<h3>Maven</h3>
+<h3>
+<a name="maven" class="anchor" href="#maven"><span class="octicon octicon-link"></span></a>Maven</h3>
 
-<div class="highlight"><pre><span class="nt">&lt;dependency&gt;</span>
+<p>Current stable version is 2.0.0, which supports new feautres in iOS 7.</p>
+
+<div class="highlight highlight-xml"><pre><span class="nt">&lt;dependency&gt;</span>
     <span class="nt">&lt;groupId&gt;</span>com.ryantenney.passkit4j<span class="nt">&lt;/groupId&gt;</span>
     <span class="nt">&lt;artifactId&gt;</span>passkit4j<span class="nt">&lt;/artifactId&gt;</span>
-    <span class="nt">&lt;version&gt;</span>1.0.1<span class="nt">&lt;/version&gt;</span>
+    <span class="nt">&lt;version&gt;</span>2.0.0<span class="nt">&lt;/version&gt;</span>
 <span class="nt">&lt;/dependency&gt;</span>
 </pre></div>
 
-<hr><h3>License</h3>
+<h3>
+<a name="documentation" class="anchor" href="#documentation"><span class="octicon octicon-link"></span></a>Documentation</h3>
 
-<p>Copyright (c) 2012 Ryan Tenney</p>
+<p>Javadocs are hosted at <a href="http://ryantenney.github.io/passkit4j/docs/">http://ryantenney.github.io/passkit4j/docs/</a></p>
+
+<hr><h3>
+<a name="license" class="anchor" href="#license"><span class="octicon octicon-link"></span></a>License</h3>
+
+<p>Copyright (c) 2012-2013 Ryan Tenney</p>
 
 <p>Published under Apache Software License 2.0, see LICENSE</p>
 
 <p><a href="http://rochestermade.com"><img src="http://rochestermade.com/media/images/rochester-made-dark-on-light.png" alt="Rochester Made"></a></p>
       </section>
-
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/ryantenney">ryantenney</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
     </div>
-    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
-    
+    <script src="javascripts/scale.fix.js"></script>
+              <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-3831117-8");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
   </body>
 </html>
