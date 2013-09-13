@@ -1,7 +1,5 @@
 # passkit4j [![Build Status](https://secure.travis-ci.org/ryantenney/passkit4j.png?branch=master)](https://travis-ci.org/ryantenney/passkit4j)
 
-<div style="float:right;padding:10px;"><img src="https://s3.amazonaws.com/10e/boulder-coffee-pass.png" width="320px"></div>
-
 ## Apple Passbook library for Java
 
  - Fluent API
