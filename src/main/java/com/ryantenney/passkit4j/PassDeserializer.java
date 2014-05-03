@@ -1,24 +1,25 @@
 package com.ryantenney.passkit4j;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.ObjectCodec;
-import com.fasterxml.jackson.databind.DeserializationContext;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.*;
+import com.fasterxml.jackson.databind.deser.DeserializationProblemHandler;
 import com.fasterxml.jackson.databind.deser.std.StdScalarDeserializer;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
+import com.ryantenney.passkit4j.io.NamedInputStreamSupplier;
 import com.ryantenney.passkit4j.model.*;
 
 import java.io.IOException;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import java.io.InputStream;
+import java.util.*;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 
 public class PassDeserializer {
 
@@ -55,7 +56,7 @@ public class PassDeserializer {
         }
 
         @Override
-        public Field deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException, JsonProcessingException {
+        public Field deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
             ObjectCodec codec = jp.getCodec();
             JsonNode node = codec.readTree(jp);
             for (String field : fields.keySet()) {
@@ -72,12 +73,22 @@ public class PassDeserializer {
     private static final ObjectMapper objectMapper;
 	static {
 		objectMapper = new ObjectMapper();
-		objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
-		objectMapper.setDateFormat(new ISO8601DateFormat());
+        objectMapper.setDateFormat(new ISO8601DateFormat());
 		objectMapper.setVisibilityChecker(objectMapper.getVisibilityChecker().withFieldVisibility(Visibility.ANY));
-		objectMapper.setSerializationInclusion(Include.NON_EMPTY);
+
         objectMapper.registerModule( new PassDeserializerModule() );
-	}
+        objectMapper.configure(JsonParser.Feature.AUTO_CLOSE_SOURCE, false);
+        objectMapper.configure(JsonGenerator.Feature.AUTO_CLOSE_TARGET, false);
+
+        //objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        objectMapper.addHandler(new DeserializationProblemHandler() {
+            @Override
+            public boolean handleUnknownProperty(DeserializationContext ctxt, JsonParser jp, JsonDeserializer<?> deserializer, Object beanOrClass, String propertyName) throws IOException {
+                System.out.println("Unknown property " + propertyName);
+                return true;
+            }
+        });
+    }
 
     private static final Map<String, Class<? extends PassInformation>> styles;
     static {
@@ -88,6 +99,67 @@ public class PassDeserializer {
         _styles.put("generic", Generic.class);
         _styles.put("storeCard", StoreCard.class);
         styles = Collections.unmodifiableMap(_styles);
+    }
+
+    public static Pass readPkPassArchive(InputStream input) throws PassDeserializationException {
+        ZipInputStream zip = new ZipInputStream(input);
+
+        try {
+            Pass pass = null;
+            Map<String, String> manifest = null;
+            List<NamedInputStreamSupplier> files = new ArrayList<NamedInputStreamSupplier>();
+            String signature = null;
+
+            ZipEntry entry = zip.getNextEntry();
+            while (entry != null) {
+                String name = entry.getName();
+
+                if (name.equals("pass.json")) {
+                    System.out.println("pass.json");
+
+                    ObjectNode tree = objectMapper.readValue(zip, ObjectNode.class);
+                    pass = generatePass(tree);
+
+                } else if (name.equals("manifest.json")) {
+                    System.out.println("manifest.json");
+
+                    TypeReference<TreeMap<String,String>> typeRef = new TypeReference<TreeMap<String,String>>() {};
+                    manifest = objectMapper.readValue(zip, typeRef);
+
+
+                } else if (name.equals("signature")) {
+                    System.out.println("signature");
+                    signature = "ok";
+                } else {
+                    // Anything else
+                    System.out.println(entry.getName());
+                    files.add( new BufferedPassResource( entry.getName(), zip ) );
+                }
+
+                entry = zip.getNextEntry();
+            }
+
+            if (pass == null)
+                throw new PassDeserializationException("Pass is missing pass.json");
+
+            if (manifest == null)
+                throw new PassDeserializationException("Pass is missing manifest.json");
+
+            if (signature == null)
+                throw new PassDeserializationException("Pass is missing signature");
+
+            System.out.println(manifest.toString());
+
+            // TODO VALIDATE SIGNATURE
+            // TODO Check hashes in manifest agaisnt files
+            // TODO Check there aren't any missing files
+            // TODO Check there aren't extra files
+
+            return pass.files(files);
+
+        } catch (IOException e) {
+            throw new PassDeserializationException(e);
+        }
     }
 
     /*
