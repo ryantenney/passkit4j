@@ -10,7 +10,8 @@ public enum BarcodeFormat {
 
 	PDF417("PKBarcodeFormatPDF417"),
 	QR("PKBarcodeFormatQR"),
-	AZTEC("PKBarcodeFormatAztec");
+	AZTEC("PKBarcodeFormatAztec"),
+	CODE128("PKBarcodeFormatCode128");
 
 	private static final Map<String, BarcodeFormat> lookup;
 

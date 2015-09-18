@@ -43,6 +43,8 @@ public class Pass {
 	// Visual Appearance Keys
 
 	private Barcode barcode;
+	private List<Barcode> barcodes;
+	
 	private Color backgroundColor;
 	private Color foregroundColor;
 	private String groupingIdentifier;
@@ -86,6 +88,20 @@ public class Pass {
 	@JsonIgnore private List<NamedInputStreamSupplier> files;
 
 
+	public List<Barcode> barcodes() {
+		return this.barcodes;
+	}
+	
+	public Pass barcodes(List<Barcode> values) {
+		this.barcodes = values;
+		return this;
+	}
+	
+	public Pass barcodes(Barcode... values) {
+		this.barcodes = Arrays.asList(values);
+		return this;
+	}
+	
 	public List<NamedInputStreamSupplier> files() {
 		if (this.files == null) {
 			return Collections.emptyList();
