@@ -28,6 +28,9 @@ public class StoreCardExample {
 				new Location(43.165389, -77.589655).relevantText("Public Market")
 			)
 			.barcode(new Barcode(BarcodeFormat.PDF417, "12345678"))
+			.barcodes(
+					new Barcode(BarcodeFormat.CODE128, "12345678"),
+					new Barcode(BarcodeFormat.PDF417, "12345678"))
 			.logoText("Boulder Coffee")
 			.foregroundColor(Color.WHITE)
 			.backgroundColor(new Color(118, 74, 50))
