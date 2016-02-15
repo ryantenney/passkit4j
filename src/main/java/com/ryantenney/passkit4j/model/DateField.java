@@ -28,6 +28,7 @@ public class DateField implements Field<Date> {
 	private DateStyle dateStyle;
 	private DateStyle timeStyle;
 	@JsonProperty("isRelative") private boolean relative = false;
+	private boolean ignoresTimeZone = false;
 
 	public DateField(String key, String label, Date value) {
 		this(key, value);
