@@ -28,13 +28,13 @@ PassSerializer.writePkPassArchive(pass, signer, outputStream);
 
 ### Maven
 
-Current stable version is 2.0.0, which supports new feautres in iOS 7.
+Current stable version is 2.0.1, which supports iOS 9 passes.
 
 ```xml
 <dependency>
 	<groupId>com.ryantenney.passkit4j</groupId>
 	<artifactId>passkit4j</artifactId>
-	<version>2.0.0</version>
+	<version>2.0.1</version>
 </dependency>
 ```
 
@@ -46,7 +46,7 @@ Javadocs are hosted at http://ryantenney.github.io/passkit4j/docs/
 
 ### License
 
-Copyright (c) 2012-2013 Ryan Tenney
+Copyright (c) 2012-2016 Ryan Tenney
 
 Published under Apache Software License 2.0, see LICENSE
 
