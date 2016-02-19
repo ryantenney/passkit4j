@@ -43,6 +43,7 @@ public class StoreCardExample {
 				new PassResource("src/test/resources/storecard/strip.png"),
 				new PassResource("src/test/resources/storecard/strip@2x.png")
 			)
+			.nfc(new NFC("test"))
 			.passInformation(
 				new StoreCard()
 					.headerFields(

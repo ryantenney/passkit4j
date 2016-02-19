@@ -21,6 +21,7 @@ import com.ryantenney.passkit4j.model.Barcode;
 import com.ryantenney.passkit4j.model.Beacon;
 import com.ryantenney.passkit4j.model.Color;
 import com.ryantenney.passkit4j.model.Location;
+import com.ryantenney.passkit4j.model.NFC;
 import com.ryantenney.passkit4j.model.PassInformation;
 
 @Data
@@ -82,6 +83,10 @@ public class Pass {
 
 	private Date expirationDate;
 	@JsonInclude(Include.NON_DEFAULT) private boolean voided = false;
+
+
+	// NFC Keys
+	private NFC nfc;
 
 
 	@JsonIgnore private PassInformation passInformation;
