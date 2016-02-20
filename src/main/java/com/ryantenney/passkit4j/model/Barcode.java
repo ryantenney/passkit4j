@@ -1,13 +1,12 @@
 package com.ryantenney.passkit4j.model;
 
-import lombok.Data;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 import lombok.experimental.Accessors;
 
 @Data
 @Accessors(chain=true, fluent=true)
 @RequiredArgsConstructor
+@NoArgsConstructor(access= AccessLevel.PROTECTED)
 public class Barcode {
 
 	@NonNull private BarcodeFormat format;

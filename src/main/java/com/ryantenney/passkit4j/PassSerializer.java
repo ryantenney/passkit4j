@@ -81,7 +81,7 @@ public class PassSerializer {
 		}
 	}
 
-	protected static ObjectNode generatePass(Pass pass) {
+	public static ObjectNode generatePass(Pass pass) {
 		ObjectNode tree = objectMapper.valueToTree(pass);
 
 		PassInformation info = pass.passInformation();
