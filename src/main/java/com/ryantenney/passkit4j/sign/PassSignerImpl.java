@@ -53,7 +53,6 @@ public class PassSignerImpl implements PassSigner {
 		/**
 		 * Deprecated in favor of calling {@code keystore(InputStream, String)}
 		 * followed by setting the alias with {@code alias(String)}
-		 * @param keyStore
 		 * @param alias
 		 * @param password
 		 * @return
