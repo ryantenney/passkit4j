@@ -20,7 +20,7 @@ public class Location {
 	  this.longitude = longitude;
 	}
 
-	@JsonInclude(Include.NON_DEFAULT) private double altitude = Double.NaN;
+	@JsonInclude(Include.NON_NULL) private Double altitude = null;
 	private String relevantText;
 
 }

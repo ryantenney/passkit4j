@@ -21,7 +21,7 @@ public class EventTicketExample {
 			.serialNumber("nmyuxofgnb")
 			.relevantDate("2011-12-08T13:00:00-08:00")
 			.locations(
-				new Location(37.6189722, -122.3748889),
+				new Location(37.6189722, -122.3748889).altitude(10.0),
 				new Location(37.33182, -122.03118)
 			)
 			.barcode(new Barcode(BarcodeFormat.PDF417, "123456789"))
