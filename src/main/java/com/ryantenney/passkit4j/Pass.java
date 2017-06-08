@@ -23,6 +23,8 @@ import com.ryantenney.passkit4j.model.Color;
 import com.ryantenney.passkit4j.model.Location;
 import com.ryantenney.passkit4j.model.NFC;
 import com.ryantenney.passkit4j.model.PassInformation;
+import java.text.ParseException;
+import java.text.ParsePosition;
 
 @Data
 @NoArgsConstructor
@@ -177,8 +179,12 @@ public class Pass {
 	}
 
 	public Pass relevantDate(String iso8601dateString) {
-		this.relevantDate = ISO8601Utils.parse(iso8601dateString);
-		return this;
+        try {
+            this.relevantDate = ISO8601Utils.parse(iso8601dateString, new ParsePosition(0));
+            return this;
+        } catch (ParseException e) {
+            throw new IllegalArgumentException(e);
+        }
 	}
 
 	public Pass expirationDate(Date expirationDate) {
@@ -192,8 +198,12 @@ public class Pass {
 	}
 
 	public Pass expirationDate(String iso8601dateString) {
-		this.expirationDate = ISO8601Utils.parse(iso8601dateString);
-		return this;
+        try {
+            this.expirationDate = ISO8601Utils.parse(iso8601dateString, new ParsePosition(0));
+            return this;
+        } catch (ParseException e) {
+            throw new IllegalArgumentException(e);
+        }
 	}
 
 }
