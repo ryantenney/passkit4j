@@ -88,6 +88,9 @@ public class Pass {
 	// NFC Keys
 	private NFC nfc;
 
+	// Extended properties
+	@JsonInclude(Include.NON_DEFAULT) private boolean sharingProhibited = false;
+
 
 	@JsonIgnore private PassInformation passInformation;
 	@JsonIgnore private List<NamedInputStreamSupplier> files;
