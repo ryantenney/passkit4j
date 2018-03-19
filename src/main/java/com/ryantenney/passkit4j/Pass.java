@@ -1,21 +1,18 @@
 package com.ryantenney.passkit4j;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.experimental.Accessors;
-
+import java.text.ParseException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.util.ISO8601Utils;
+import com.fasterxml.jackson.databind.util.StdDateFormat;
 import com.ryantenney.passkit4j.io.NamedInputStreamSupplier;
 import com.ryantenney.passkit4j.model.Barcode;
 import com.ryantenney.passkit4j.model.Beacon;
@@ -23,6 +20,11 @@ import com.ryantenney.passkit4j.model.Color;
 import com.ryantenney.passkit4j.model.Location;
 import com.ryantenney.passkit4j.model.NFC;
 import com.ryantenney.passkit4j.model.PassInformation;
+
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.experimental.Accessors;
 
 @Data
 @NoArgsConstructor
@@ -177,7 +179,11 @@ public class Pass {
 	}
 
 	public Pass relevantDate(String iso8601dateString) {
-		this.relevantDate = ISO8601Utils.parse(iso8601dateString);
+		try {
+			this.relevantDate = StdDateFormat.instance.parse(iso8601dateString);
+		} catch(ParseException pe) {
+			this.relevantDate = null;
+		}
 		return this;
 	}
 
@@ -192,7 +198,11 @@ public class Pass {
 	}
 
 	public Pass expirationDate(String iso8601dateString) {
-		this.expirationDate = ISO8601Utils.parse(iso8601dateString);
+		try {
+			this.expirationDate = StdDateFormat.instance.parse(iso8601dateString);
+		} catch(ParseException pe) {
+			this.expirationDate = null;
+		}
 		return this;
 	}
 
