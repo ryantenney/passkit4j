@@ -42,6 +42,14 @@
 			<email>ryan@10e.us</email>
 			<timezone>-5</timezone>
 		</developer>
+		<developer>
+			<id>stefaanneyts</id>
+			<name>Stefaan Neyts</name>
+			<email>stefaan.neyts@duo.be</email>
+			<organization>Duo nv</organization>
+			<organizationUrl>https://www.duo.be</organizationUrl>
+			<timezone>1</timezone>
+		</developer>
 	</developers>
 
 	<properties>
@@ -53,35 +61,41 @@
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
-			<version>0.12.0</version>
+			<version>1.16.20</version>
 			<scope>provided</scope>
 		</dependency>
 
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-core</artifactId>
-			<version>2.1.0</version>
+			<version>2.9.4</version>
 		</dependency>
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-annotations</artifactId>
-			<version>2.1.0</version>
+			<version>2.9.4</version>
 		</dependency>
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
-			<version>2.1.0</version>
+			<version>2.9.4</version>
+			<exclusions>
+				<exclusion>
+					<groupId>com.fasterxml.jackson.core</groupId>
+					<artifactId>jackson-annotations</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.bouncycastle</groupId>
 			<artifactId>bcmail-jdk15on</artifactId>
-			<version>1.47</version>
+			<version>1.59</version>
 		</dependency>
 
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>4.10</version>
+			<version>4.12</version>
 			<scope>test</scope>
 		</dependency>
 
@@ -206,7 +220,7 @@
 			<plugin>
 				<groupId>org.projectlombok</groupId>
 				<artifactId>lombok-maven-plugin</artifactId>
-				<version>0.12.0.0</version>
+				<version>1.16.20.0</version>
 				<executions>
 					<execution>
 						<phase>generate-sources</phase>
@@ -321,7 +335,7 @@
 					<plugin>
 						<groupId>org.projectlombok</groupId>
 						<artifactId>lombok-maven-plugin</artifactId>
-						<version>0.12.0.0</version>
+						<version>1.16.20.0</version>
 						<dependencies>
 							<dependency>
 								<groupId>sun.jdk</groupId>
