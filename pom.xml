@@ -46,6 +46,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<closeTestReports>true</closeTestReports>
 	</properties>
 
 	<dependencies>
@@ -107,6 +108,7 @@
 				<version>2.12.3</version>
 				<configuration>
 					<parallel>classes</parallel>
+					<disableXmlReport>${closeTestReports}</disableXmlReport>
 				</configuration>
 			</plugin>
 
